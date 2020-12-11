@@ -72,7 +72,9 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	while (true)
 	{
 		// メッセージ処理
-		if (win->ProcessMessage()) {	break; }
+		if (win->ProcessMessage()) {break; }
+		// 描画開始
+		dxCommon->PreDraw();
 
 		// 入力関連の毎フレーム処理
 		input->update();
@@ -83,10 +85,6 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 		//シーンの更新
 		SceneManager::instance().update(dxCommon, input, mouse, camera, win);
 
-		// 描画開始
-		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		//gameScene->Draw();
 		// 描画終了
 		dxCommon->PostDraw();
 	}

@@ -1,79 +1,85 @@
-ï»¿#pragma once
+#pragma once
+#include<xaudio2.h>
+#include<iostream>
+#include<fstream>
 
-#include <Windows.h>
-#include <xaudio2.h>
-#include <wrl.h>
+#pragma comment(lib,"xaudio2.lib")
 
-/// <summary>
-/// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
-/// </summary>
-class XAudio2VoiceCallback : public IXAudio2VoiceCallback
+class XAudio2VoiceCallback :public IXAudio2VoiceCallback
 {
-public:
-	// ãƒœã‚¤ã‚¹å‡¦ç†ãƒ‘ã‚¹ã®é–‹å§‹æ™‚
-	//STDMETHOD_(void, OnVoiceProcessingPassStart) (THIS_ UINT32 BytesRequired) {};
-	void OnVoiceProcessingPassStart(UINT32 BytesRequired) {};
-	// ãƒœã‚¤ã‚¹å‡¦ç†ãƒ‘ã‚¹ã®çµ‚äº†æ™‚
+	// ƒ{ƒCƒXˆ—ƒpƒX‚ÌŠJn
+	STDMETHOD_(void, OnVoiceProcessingPassStart) (THIS_ UINT32 BytesRequired) {};
+
+	// ƒ{ƒCƒXˆ—ƒpƒX‚ÌI—¹
 	STDMETHOD_(void, OnVoiceProcessingPassEnd) (THIS) {};
-	// ãƒãƒƒãƒ•ã‚¡ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®å†ç”ŸãŒçµ‚äº†ã—ãŸæ™‚
+
+	// ƒoƒbƒtƒ@ƒXƒgƒŠ[ƒ€‚ÌÄ¶‚ªI—¹‚µ‚½
 	STDMETHOD_(void, OnStreamEnd) (THIS) {};
-	// ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨é–‹å§‹æ™‚
+
+	// ƒoƒbƒtƒ@‚Ìg—pŠJn
 	STDMETHOD_(void, OnBufferStart) (THIS_ void* pBufferContext) {};
-	// ãƒãƒƒãƒ•ã‚¡ã®æœ«å°¾ã«é”ã—ãŸæ™‚
-	STDMETHOD_(void, OnBufferEnd) (THIS_ void* pBufferContext) {
-		// ãƒãƒƒãƒ•ã‚¡ã‚’è§£æ”¾ã™ã‚‹
-		delete[] pBufferContext;
+
+	// ƒoƒbƒtƒ@‚Ì––”ö‚É’B‚µ‚½
+	STDMETHOD_(void, OnBufferEnd) (THIS_ void* pBufferContext)
+	{
+		delete[]pBufferContext;
 	};
-	// å†ç”ŸãŒãƒ«ãƒ¼ãƒ—ä½ç½®ã«é”ã—ãŸæ™‚
+
+	// Ä¶‚ªƒ‹[ƒvˆÊ’u‚É’B‚µ‚½
 	STDMETHOD_(void, OnLoopEnd) (THIS_ void* pBufferContext) {};
-	// ãƒœã‚¤ã‚¹ã®å®Ÿè¡Œã‚¨ãƒ©ãƒ¼æ™‚
+
+	// ƒ{ƒCƒX‚ÌÀsƒGƒ‰[
 	STDMETHOD_(void, OnVoiceError) (THIS_ void* pBufferContext, HRESULT Error) {};
 };
 
-/// <summary>
-/// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ª
-/// </summary>
 class Audio
 {
-private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
-	// Microsoft::WRL::ã‚’çœç•¥
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-public: // ã‚µãƒ–ã‚¯ãƒ©ã‚¹
-	// ãƒãƒ£ãƒ³ã‚¯ãƒ˜ãƒƒãƒ€
+public:
+	//ƒ`ƒƒƒ“ƒN
 	struct Chunk
 	{
-		char	id[4]; // ãƒãƒ£ãƒ³ã‚¯æ¯ã®ID
-		int		size;  // ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
+		char id[4];//ƒ`ƒƒƒ“ƒN‚²‚Æ‚ÌID
+		int32_t size;//ƒ`ƒƒƒ“ƒNƒTƒCƒY
 	};
-
-	// RIFFãƒ˜ãƒƒãƒ€ãƒãƒ£ãƒ³ã‚¯
+	//RIFFƒwƒbƒ_ƒ`ƒƒƒ“ƒN
 	struct RiffHeader
 	{
-		Chunk	chunk;   // "RIFF"
-		char	type[4]; // "WAVE"
+		Chunk chunk;//RIFF
+		char type[4];//wave
 	};
-
-	// FMTãƒãƒ£ãƒ³ã‚¯
+	//FMTƒ`ƒƒƒ“ƒN
 	struct FormatChunk
 	{
-		Chunk		chunk; // "fmt "
-		WAVEFORMAT	fmt;   // æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+		Chunk chunk;//fmt
+		WAVEFORMAT fmt;//”gŒ`ƒtƒH[ƒ}ƒbƒg
 	};
+	void initialize();
+	void PlayWave(const char* filename,float volume=1.0);
+	void PlayLoopWave(const char* filename, float volume=1.0);
+	void FileOpen();
+	void LoadWavFile();
+	void Discard();
 
-public: // ãƒ¡ãƒ³ãƒé–¢æ•°
+	void setVolume(float volume);
 
-	/// <summary>
-	/// åˆæœŸåŒ–
-	/// </summary>
-	/// <returns>æˆå¦</returns>
-	bool Initialize();
+	float FadeIN(float TargetVolume, float DeltaTime);
+	void UpdateFade(float TargetVolume, float TargetTime,float DeltaTime);
 
-	// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã¨å†ç”Ÿ
-	void PlayWave(const char* filename);
+	IXAudio2SourceVoice* pSourcVoice = nullptr;
+private:
+	IXAudio2* pXAudio2 = nullptr;
+	UINT32 flags = 0;
 
-private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
-	ComPtr<IXAudio2> xAudio2;
-	IXAudio2MasteringVoice* masterVoice;
+	//ƒ}ƒXƒ^[ƒ{ƒCƒX
+	IXAudio2MasteringVoice* pMasteringVoice = nullptr;
+	//ƒ\[ƒXƒ{ƒCƒX
+	
+	std::ifstream file;
+	const char* filename;
+	FormatChunk format;
+	Chunk data;
+	char* pBuffer;
 	XAudio2VoiceCallback voiceCallback;
+	float TargetVolume;
 };
 
