@@ -43,7 +43,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	//ui->HpGauge(player->GetHp(), { 50, 50 });
 
-	objground->Update();
+	objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
 	/*if (input->isKeyDown(DIK_ESCAPE))
 	{

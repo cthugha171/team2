@@ -30,7 +30,7 @@ void Player::Update(Camera* camera, Input* input)
 	Move(input);
 	Roll(input);
 	camera->cameraMove(camPos);
-	//pObj->Update(camera->GetmatView(), camera->GetmatProjection());
+	pObj->Update(camera->GetmatView(), camera->GetmatProjection());
 
 }
 
