@@ -137,7 +137,11 @@ public: // メンバ関数
 	/// <param name="model">モデル</param>
 	void SetModel(Model* model) { this->model = model; }
 
+	void SetRadius(float radius) { this->radius = radius; }
+
 	void SetBillboard(bool isBillboard) { this->isBillboard = isBillboard; }
+
+	float GetRadius() { return radius; }
 
 private: // メンバ変数
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
@@ -157,5 +161,7 @@ private: // メンバ変数
 	Model* model = nullptr;
 	// ビルボード
 	bool isBillboard = false;
+	//当たり判定用半径
+	float radius = 0;
 };
 

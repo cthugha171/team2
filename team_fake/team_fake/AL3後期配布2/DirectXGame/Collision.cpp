@@ -16,19 +16,19 @@ DirectX::XMFLOAT3 operator*(float b,DirectX::XMFLOAT3& a)
 
 bool Collision::SphereToSphere( Object3d* shpere1,  Object3d* shpere2)
 {
-	//XMFLOAT3 pos1= shpere1->GetPosition();
-	//XMFLOAT3 pos2 = shpere2->GetPosition();
-	//float r1 = shpere1->GetRadius();
-	//float r2 = shpere2->GetRadius();
+	XMFLOAT3 pos1= shpere1->GetPosition();
+	XMFLOAT3 pos2 = shpere2->GetPosition();
+	float r1 = shpere1->GetRadius();
+	float r2 = shpere2->GetRadius();
 
-	//float x = powf( pos2.x - pos1.x, 2);
-	//float y = powf( pos2.y - pos1.y, 2);
-	//float z = powf( pos2.z - pos2.z, 2);
-	//float r = powf(r1 + r2,2);
-	//if (x + y + z <= r)
-	//{
-	//	return true;
-	//}
+	float x = powf( pos2.x - pos1.x, 2);
+	float y = powf( pos2.y - pos1.y, 2);
+	float z = powf( pos2.z - pos2.z, 2);
+	float r = powf(r1 + r2,2);
+	if (x + y + z <= r)
+	{
+		return true;
+	}
 	return false;
 }
 
@@ -44,6 +44,5 @@ bool Collision::SphereToPlane(Object3d* shpere, Model* plane,XMFLOAT3 *inter )
 	//{
 	//	*inter = -dist * normal + pos;
 	//}
-
-	return true;
+	//return true;
 }
