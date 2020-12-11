@@ -1,0 +1,14 @@
+diff a/TeamGameLibrary/TeamGameLibrary/PlayerShot.cpp b/TeamGameLibrary/TeamGameLibrary/PlayerShot.cpp	(rejected hunks)
+@@ -30,6 +30,12 @@
+ 		//�e����ʊO�Ȃ�
+ 		if ((*it)->GetPosition().x - camera->getEyePos().x < -winApp->GetWindowWidthSize() || (*it)->GetPosition().y - camera->getEyePos().y < -winApp->GetWindowHeightSize() || (*it)->GetPosition().z - camera->getEyePos().z < -500 ||
+ 			(*it)->GetPosition().x - camera->getEyePos().x > winApp->GetWindowWidthSize() || (*it)->GetPosition().y - camera->getEyePos().y > winApp->GetWindowHeightSize() || (*it)->GetPosition().z - camera->getEyePos().z > 500)
++=======
++
++		//�e����ʊO�Ȃ�
++		if (/*(*it)->GetPosition().x - camera->getEyePos().x < 0 || (*it)->GetPosition().y - camera->getEyePos().y < 0 || (*it)->GetPosition().z - camera->getEyePos().z < 0 ||*/
++			(*it)->GetPosition().x - camera->getEyePos().x > winApp->GetWindowWidthSize() || (*it)->GetPosition().y - camera->getEyePos().y > winApp->GetWindowHeightSize() || (*it)->GetPosition().z - camera->getEyePos().z > 1000)
++>>>>>>> c3938d0e855e6d3dc5dc813046942f2e4f9ebee0
+ 		{
+ 			cache.Cache(*it);
+ 			it = shotList.erase(it);
