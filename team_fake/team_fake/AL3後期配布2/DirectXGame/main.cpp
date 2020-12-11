@@ -16,7 +16,6 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	Camera* camera = nullptr;
 	Input* input = nullptr;	
 	MouseInput* mouse = nullptr;
-	Audio* audio = nullptr;
 	GameScene* gameScene = nullptr;
 
 	// ゲームウィンドウの作成
@@ -42,9 +41,6 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	//カメラの初期化
 	camera = new Camera();
 	camera->Initialize(win);
-
-	// オーディオの初期化
-	audio = new Audio();
 
 	// スプライト静的初期化
 	if (!Sprite::StaticInitialize(dxCommon->GetDevice(), WinApp::window_width, WinApp::window_height)) {
@@ -86,8 +82,6 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 		dxCommon->PostDraw();
 	}
 	// 各種解放
-	//safe_delete(gameScene);
-	safe_delete(audio);
 	safe_delete(input);
 	safe_delete(dxCommon);
 
