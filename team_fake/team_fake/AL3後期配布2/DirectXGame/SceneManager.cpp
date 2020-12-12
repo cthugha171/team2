@@ -63,7 +63,7 @@ void SceneManager::update(DirectXCommon* directXInit,Input*input, MouseInput* mo
 	{
 		currentScene->Update(input,mouse,camera,winApp);
 
-		currentScene->Draw();
+		currentScene->Draw(directXInit);
 	}
 }
 

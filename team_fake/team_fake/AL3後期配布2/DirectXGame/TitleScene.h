@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Model.h"
 #include "Object3d.h"
+#include "DeltaTime.h"
 
 class TitleScene : public IScene
 {
@@ -17,6 +18,13 @@ public:
 
 	void Delete();
 private:
-	Model* ground;
-	Object3d* objground;
+	Sprite* TitleBG=nullptr;
+	Sprite* TitleName = nullptr;
+	Sprite* TitlePushKey = nullptr;
+	DeltaTime* deltaTime;
+	float time=0;
+	float colorGB = 0;
+
+	Object3d* player;
+	Model* pModel;
 };

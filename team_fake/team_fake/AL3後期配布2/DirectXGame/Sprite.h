@@ -163,6 +163,9 @@ public: // メンバ関数
 	/// <param name="texSize">テクスチャサイズ</param>
 	void SetTextureRect(XMFLOAT2 texBase, XMFLOAT2 texSize);
 
+	//色設定
+	void SetColor(XMFLOAT4 color) { this->color = color; }
+
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -188,7 +191,7 @@ private: // メンバ変数
 	// ワールド行列
 	XMMATRIX matWorld{};		
 	// 色
-	XMFLOAT4 color = { 1, 1, 1, 1 }; 
+	XMFLOAT4 color = { 1, 1, 1, 0.5 }; 
 	// 左右反転
 	bool isFlipX = false;
 	// 上下反転

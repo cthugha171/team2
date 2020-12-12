@@ -44,5 +44,5 @@ bool Collision::SphereToPlane(Object3d* shpere, Model* plane,XMFLOAT3 *inter )
 	//{
 	//	*inter = -dist * normal + pos;
 	//}
-	//return true;
+	return true;
 }

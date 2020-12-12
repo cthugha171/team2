@@ -4,7 +4,7 @@
 float DeltaTime::deltaTime()
 {
 	float nowTime = clock();
-	float deltatime = (nowTime - LastTime) / 1000.0f;
+	deltatime = (nowTime - LastTime) / 1000.0f;
 	LastTime = clock();
 	return deltatime;
 }

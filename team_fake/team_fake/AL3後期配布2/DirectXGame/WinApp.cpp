@@ -31,7 +31,8 @@ void WinApp::CreateGameWindow()
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false); // 自動でサイズ補正
 
 	// ウィンドウオブジェクトの生成
-	hwnd = CreateWindow(wndClass.lpszClassName, // クラス名
+	hwnd = CreateWindow(
+		wndClass.lpszClassName, // クラス名
 		windowClassName,			// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	// タイトルバーと境界線があるウィンドウ
 		CW_USEDEFAULT,			// 表示X座標（OSに任せる）

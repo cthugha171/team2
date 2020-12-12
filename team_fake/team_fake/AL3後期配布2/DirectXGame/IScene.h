@@ -15,7 +15,7 @@ public:
 
 	virtual void Update(Input*input, MouseInput* mouse, Camera* camera, WinApp* winApp) {}//更新
 
-	virtual void Draw() {}//描画
+	virtual void Draw(DirectXCommon* directXInit) {}//描画
 
 	virtual void Delete() {}//色々削除
 

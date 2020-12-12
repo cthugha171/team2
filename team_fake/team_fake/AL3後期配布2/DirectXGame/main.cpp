@@ -30,10 +30,6 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	// 入力の初期化
 	input = new Input();
 	input->initialize(win);
-	/*if (!input->initialize(win)) {
-		assert(0);
-		return 1;
-	}*/
 
 	mouse = new MouseInput();
 	mouse->initialize(win);
