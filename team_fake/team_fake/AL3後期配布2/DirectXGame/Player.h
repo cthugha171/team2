@@ -32,9 +32,12 @@ public:
 
 	float GetHp();
 
+
 	Object3d GetObjectShape();
 
 	XMFLOAT3 GetPosition();
+
+	XMFLOAT3 GetRotation();
 
 	void Release();
 

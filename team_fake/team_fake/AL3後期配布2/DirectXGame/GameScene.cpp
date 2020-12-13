@@ -18,7 +18,7 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	player->Initialize();
 
 	eObj = Object3d::Create();
-	eModel = Model::CreateFromOBJ("player");
+	eModel = Model::CreateFromOBJ("enemy");
 	eObj->SetModel(eModel);
 	enemy = new Enemy();
 	enemy->Initialize(escape, { 50,0,50 }, eObj, directXInit->GetDevice());
@@ -27,21 +27,21 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	pbModel = Model::CreateFromOBJ("player");
 	pbObj->SetModel(pbModel);
 
-	//ui = new UI(directXInit->GetDev(), directXInit->GetcmdList());
-	//ui->Initialize();
-	//ui->InitHP(player->GetHp());
+	ui = new UI();
+	ui->Initialize();
+	ui->InitHP(player->GetHp());
 }
 
 void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
 	player->Update(camera, input);
 
-	//if (player->Shot(mouse))
-	//{
-	//	playerShot.Shot(player->GetPosition(), pbObj);
-	//}
+	if (player->Shot(mouse))
+	{
+		playerShot.Shot(player->GetPosition(), pbObj);
+	}
 
-	//ui->HpGauge(player->GetHp(), { 50, 50 });
+	ui->HpGauge(player->GetHp());
 
 	objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
@@ -58,7 +58,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	}*/
 }
 
-void GameScene::Draw()
+void GameScene::Draw(DirectXCommon* directXinit)
 {
 	//コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = directXinit->GetCommandList();
@@ -71,10 +71,20 @@ void GameScene::Draw()
 
 	player->Draw();
 
+	playerShot.Draw();
+
 	enemy->Draw();
 
 	//3Dオブジェクト描画後取得
 	Object3d::PostDraw();
+
+	//スプライトの描画開始
+	Sprite::PreDraw(cmdList);
+
+	ui->HpDraw();
+
+	//スプライトの描画終了
+	Sprite::PostDraw();
 }
 
 void GameScene::Delete()

@@ -158,6 +158,11 @@ XMFLOAT3 Player::GetPosition()
 	return position;
 }
 
+XMFLOAT3 Player::GetRotation()
+{
+	return rotate;
+}
+
 void Player::Release()
 {
 }

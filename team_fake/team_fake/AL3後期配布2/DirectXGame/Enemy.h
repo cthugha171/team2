@@ -55,7 +55,7 @@ private:
 	float hp;
 	float distx;
 	float disty;
-	float distz;
+	float speed;
 
 	bool isDead;
 	bool once;

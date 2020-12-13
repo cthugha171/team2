@@ -6,7 +6,8 @@ void PBullet::Initialize(XMFLOAT3 pos, Object3d* bullet)
 {
 	position = pos;
 	pbObj = bullet;
-	speed = 10;
+	pbObj->SetRadius(1.0f);
+	speed = 5;
 	col = new Collision();
 	distX = 0;
 	distY = 0;
@@ -21,7 +22,7 @@ void PBullet::Update(Enemy* enemy,Player*player,MouseInput* mouse,Camera*camera,
 		return;
 	}
 	Move(player, mouse, camera, winApp);
-	//pbObj->Update(camera->GetmatView(), camera->GetmatProjection());
+	pbObj->Update(camera->GetmatView(), camera->GetmatProjection());
 }
 
 void PBullet::Move(Player* player, MouseInput* mouse,Camera*camera,WinApp*winApp)
@@ -30,20 +31,24 @@ void PBullet::Move(Player* player, MouseInput* mouse,Camera*camera,WinApp*winApp
 	{
 		//distX = mouse->GetMousePos(*camera, winApp).x - player->GetPosition().x;
 		//distY = mouse->GetMousePos(*camera, winApp).y - player->GetPosition().y;
-		//float c = std::hypot(distX, distY);
-		////ê≥ãKâª
-		//float mag = 1 / c;
 
-		//distX *= mag;
-		//distY *= mag;            
+		distX = player->GetRotation().x;
+		distY = player->GetRotation().y;
+		float c = std::hypot(distX, distY);
+
+		//ê≥ãKâª
+		float mag = 1 / c;
+
+		distX *= mag;
+		distY *= mag;  
 
 		once = true;
 	}
 
-	/*float radian = atan2(distY, distX);
+	float radian = atan2(distY, distX);
 	
 	position.x += cos(radian) * speed;
-	position.y += sin(radian) * speed;*/
+	position.y += sin(radian) * speed;
 
 	position.z += speed;
 

@@ -65,9 +65,21 @@ void EnemySpawner::Update(Camera* camera, Player* other)
 		{
 			(*it)->Damage(10);
 		}
+
+		if ((*it)->GetHp() < 0)
+		{
+			cache.Cache(*it);
+			it = enemyList.erase(it);
+			continue;
+		}
+		it++;
 	}
 }
 
 void EnemySpawner::Draw(ID3D12GraphicsCommandList* cmdList)
 {
+	for (auto enemys : enemyList)
+	{
+		enemys->Draw();
+	}
 }
