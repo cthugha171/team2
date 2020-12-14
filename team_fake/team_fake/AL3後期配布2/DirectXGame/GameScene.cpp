@@ -99,5 +99,5 @@ void GameScene::Delete()
 	safe_dalete(audio);*/
 	safe_delete(player);
 	safe_delete(enemy);
-	//safe_dalete(ui);
+	safe_delete(ui);
 }
