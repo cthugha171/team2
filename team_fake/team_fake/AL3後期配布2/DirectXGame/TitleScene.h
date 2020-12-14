@@ -27,4 +27,5 @@ private:
 
 	Object3d* player;
 	Model* pModel;
+	bool colorChange = true;
 };
