@@ -1,5 +1,9 @@
 #pragma once
 #include "Player.h"
+#include "Collision.h"
+#include "Object3d.h"
+#include "Model.h"
+#include "Camera.h"
 
 enum State //enemy行動パターン変化用
 {

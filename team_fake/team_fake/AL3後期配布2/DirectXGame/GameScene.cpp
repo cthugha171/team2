@@ -18,10 +18,10 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	player->Initialize();
 
 	eObj = Object3d::Create();
-	eModel = Model::CreateFromOBJ("enemy");
+	eModel = Model::CreateFromOBJ("player");
 	eObj->SetModel(eModel);
 	enemy = new Enemy();
-	enemy->Initialize(escape, { 50,0,50 }, eObj, directXInit->GetDevice());
+	enemy->Initialize(escape, { 0,0,0 }, eObj, directXInit->GetDevice());
 
 	pbObj = Object3d::Create();
 	pbModel = Model::CreateFromOBJ("player");
@@ -41,9 +41,14 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		playerShot.Shot(player->GetPosition(), pbObj);
 	}
 
+	enemy->Update(camera, player);
+
+	playerShot.Update(enemy, player, mouse, camera, winApp);
+
 	ui->HpGauge(player->GetHp());
 
 	objground->Update(camera->GetmatView(),camera->GetmatProjection());
+
 
 	/*if (input->isKeyDown(DIK_ESCAPE))
 	{
@@ -71,9 +76,10 @@ void GameScene::Draw(DirectXCommon* directXinit)
 
 	player->Draw();
 
+	enemy->Draw();
+
 	playerShot.Draw();
 
-	enemy->Draw();
 
 	//3Dオブジェクト描画後取得
 	Object3d::PostDraw();

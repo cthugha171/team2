@@ -39,7 +39,7 @@ void Enemy::Update(Camera* camera, Player* player)
 	if (hp <= 0)
 	{
 		hp = 0;
-		Enemy::~Enemy();
+
 		return;
 	}
 
