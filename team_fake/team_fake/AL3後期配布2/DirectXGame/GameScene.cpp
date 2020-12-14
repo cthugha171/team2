@@ -18,13 +18,13 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	player->Initialize();
 
 	eObj = Object3d::Create();
-	eModel = Model::CreateFromOBJ("player");
+	eModel = Model::CreateFromOBJ("enemy");
 	eObj->SetModel(eModel);
 	enemy = new Enemy();
 	enemy->Initialize(escape, { 0,0,0 }, eObj, directXInit->GetDevice());
 
 	pbObj = Object3d::Create();
-	pbModel = Model::CreateFromOBJ("player");
+	pbModel = Model::CreateFromOBJ("bullet");
 	pbObj->SetModel(pbModel);
 
 	ui = new UI();
