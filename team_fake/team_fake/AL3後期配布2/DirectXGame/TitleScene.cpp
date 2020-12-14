@@ -21,8 +21,8 @@ void TitleScene::Initialize(DirectXCommon* directXInit)
 	XMFLOAT3 rot = player->GetRotation();
 	rot.z -= 10;
 	player->SetRotation(rot);
-	player->SetScale({ 5,5,5 });
-	player->SetPosition({ -5,-5,0 });
+	player->SetScale({ 7,7,7 });
+	player->SetPosition({ -5,-5,3 });
 }
 
 void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
@@ -34,17 +34,26 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 
 	//PushKey‚ÌF•ÏX
 	{
-		if (colorGB > 0)
+		if (colorChange)
 		{
 			time += deltaTime->deltaTime();
 			colorGB = Vector2::lerp(1, 0, time / 3);
 			TitlePushKey->SetColor({ 1,colorGB,colorGB ,1 });
+			if (colorGB<0)
+			{
+				colorChange = false;
+			}
 		}
-		else if (colorGB <= 1)
+
+		else if (colorChange==false)
 		{
 			time += deltaTime->deltaTime();
 			colorGB = Vector2::lerp(0, 1, time / 3);
 			TitlePushKey->SetColor({ 1,colorGB,colorGB ,1 });
+			if (colorGB >= 1)
+			{
+				colorChange = true;
+			}
 		}
 
 		if (time / 3 >= 1)
