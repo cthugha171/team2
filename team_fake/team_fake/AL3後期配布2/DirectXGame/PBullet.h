@@ -34,6 +34,7 @@ private:
 	float speed;
 	float distX;
 	float distY;
+	float mag;
 	bool shot;
 	bool once;//ˆê‰ñ‚¾‚¯ŒÄ‚Ño‚·‚½‚ß‚Ì‚à‚Ì
 

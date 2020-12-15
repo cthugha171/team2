@@ -1,5 +1,7 @@
 #include "PlayerShot.h"
 
+class EnemySpawner;
+
 PlayerShot::~PlayerShot()
 {
 	for (auto shot : shotList)
@@ -10,10 +12,15 @@ PlayerShot::~PlayerShot()
 
 void PlayerShot::Shot(const XMFLOAT3& pos, Object3d* bullet)
 {
+	if(max>=10)
+	{
+		return;
+	}
 	//’e‚Ì¶¬,‰Šú‰»
 	PBullet* shot = cache.Instance(pos, bullet);
 	//’e‚ÌƒŠƒXƒg‚ÉŠi”[
 	shotList.push_back(shot);
+	max++;
 }
 
 void PlayerShot::Update(Enemy* enemy, Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp)
@@ -32,10 +39,12 @@ void PlayerShot::Update(Enemy* enemy, Player* player, MouseInput* mouse, Camera*
 		{
 			cache.Cache(*it);
 			it = shotList.erase(it);
+			max--;
 			continue;
 		}
 		++it;
 	}
+	
 }
 
 void PlayerShot::Draw()

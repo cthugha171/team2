@@ -26,10 +26,12 @@ public:
 
 	void Update(Camera* camera, Player* other);
 
-	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void Draw();
 
-private:
+	Enemy* GetEnemy();
+
 	std::list<Enemy*>enemyList;
+private:
 	EnemyCache cache;
 };
 

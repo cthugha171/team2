@@ -1,5 +1,6 @@
 #include "EnemySpawner.h"
 
+
 EnemyCache::~EnemyCache()
 {
 	while (!cache.empty())
@@ -76,10 +77,20 @@ void EnemySpawner::Update(Camera* camera, Player* other)
 	}
 }
 
-void EnemySpawner::Draw(ID3D12GraphicsCommandList* cmdList)
+void EnemySpawner::Draw()
 {
 	for (auto enemys : enemyList)
 	{
 		enemys->Draw();
+	}
+}
+
+Enemy* EnemySpawner::GetEnemy()
+{
+	for (auto it = enemyList.begin(); it != enemyList.end();)
+	{
+		return *it;
+		it++;
+		continue;
 	}
 }
