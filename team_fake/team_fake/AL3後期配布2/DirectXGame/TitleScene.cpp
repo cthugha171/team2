@@ -33,8 +33,8 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	if (input->isKeyDown(DIK_SPACE))
 	{
 		SceneManager::instance().ChangeScene("Game");
-	}
 
+	}
 	//PushKey‚ÌF•ÏX
 	{
 		if (colorChange)

@@ -23,15 +23,11 @@ void PlayerShot::Shot(const XMFLOAT3& pos, Object3d* bullet)
 	max++;
 }
 
-void PlayerShot::Update(Enemy* enemy, Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp)
+void PlayerShot::Update( Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
 	for (auto it = shotList.begin();it != shotList.end();)
 	{
-		(*it)->Update(enemy, player, mouse, camera, winApp);
-		if ((*it)->Collisions(enemy))
-		{
-			enemy->Damage(10);
-		}
+		(*it)->Update(player, mouse, camera, winApp);
 
 		//’e‚ª‰æ–ÊŠO‚È‚ç
 		if ((*it)->GetPosition().x - camera->getEyePos().x < -winApp->GetWindowWidthSize() || (*it)->GetPosition().y - camera->getEyePos().y < -winApp->GetWindowHeightSize() || (*it)->GetPosition().z - camera->getEyePos().z < -500 ||

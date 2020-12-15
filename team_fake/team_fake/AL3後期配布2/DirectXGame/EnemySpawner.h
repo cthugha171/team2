@@ -22,7 +22,7 @@ class EnemySpawner
 public:
 	~EnemySpawner();
 
-	void spawn(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev);
+	void spawn(XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev);
 
 	void Update(Camera* camera, Player* other);
 
@@ -30,8 +30,15 @@ public:
 
 	Enemy* GetEnemy();
 
+	int GetEndFlag();
+
 	std::list<Enemy*>enemyList;
 private:
 	EnemyCache cache;
+
+	State ste;
+
+	int end=0;
+	int changestate=0;
 };
 

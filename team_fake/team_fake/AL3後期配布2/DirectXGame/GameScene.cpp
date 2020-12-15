@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "SceneManager.h"
 
 void GameScene::Initialize(DirectXCommon* directXInit)
 {
@@ -17,14 +18,12 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	pObj = Object3d::Create();
 	pModel = Model::CreateFromOBJ("player");
 	pObj->SetModel(pModel);
-	player = new Player(500, {0,0},pObj,directXInit->GetDevice());
+	player = new Player(100, {0,0},pObj,directXInit->GetDevice());
 	player->Initialize();
 
 	eObj = Object3d::Create();
 	eModel = Model::CreateFromOBJ("enemy");
 	eObj->SetModel(eModel);
-	enemy = new Enemy();
-	enemy->Initialize(escape, { 0,0,50 }, eObj, directXInit->GetDevice());
 
 	pbModel = Model::CreateFromOBJ("bullet");
 
@@ -35,7 +34,17 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 
 void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
+	if(player->IsDead())
+	{
+		SceneManager::instance().ChangeScene("Over");
+	}
+	if (eneSpawn.GetEndFlag() >= 100)
+	{
+		SceneManager::instance().ChangeScene("Over");
+	}
+
 	time += deltaTime->deltaTime();
+	time2 += deltaTime->deltaTime();
 	player->Update(camera, input);
 
 	if (player->Shot(mouse))
@@ -43,17 +52,16 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		playerShot.Shot(player->GetPosition(), bobj.create(pbModel));
 	}
 
-	if (time / 3>=1)
+
+	if (time / 2>=1)
 	{
-		eneSpawn.spawn(escape,epos,eneObj.create(eModel),directXinit->GetDevice());
+		eneSpawn.spawn(epos,eneObj.create(eModel),directXinit->GetDevice());
 		time = 0;
 	}
 
-	enemy->Update(camera, player);
-
 	eneSpawn.Update(camera, player);
 
-	playerShot.Update(enemy, player, mouse, camera, winApp);
+	playerShot.Update(player, mouse, camera, winApp);
 
 	ui->HpGauge(player->GetHp());
 
@@ -65,6 +73,11 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		{
 			if ((*it)->Collisions(*itr))
 			{
+				(*itr)->Damage(10);
+			}
+			if ((*itr)->Collisions(player))
+			{
+				player->Damage(20);
 				(*itr)->Damage(10);
 			}
 			itr++;
@@ -83,6 +96,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	{
 		audio->UpdateFade(0, 5, time);
 	}*/
+
 }
 
 void GameScene::Draw(DirectXCommon* directXinit)
@@ -97,9 +111,7 @@ void GameScene::Draw(DirectXCommon* directXinit)
 	objground->Draw();
 
 	player->Draw();
-
-	enemy->Draw();
-
+	
 	eneSpawn.Draw();
 
 	playerShot.Draw();

@@ -10,7 +10,7 @@ public:
 
 	void Initialize(XMFLOAT3 pos, Object3d* bullet);
 
-	void Update(Enemy* enemy,Player*player, MouseInput* mouse,Camera* camera,WinApp* winApp) ;
+	void Update(Player*player, MouseInput* mouse,Camera* camera,WinApp* winApp) ;
 
 	void Move(Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp);
 

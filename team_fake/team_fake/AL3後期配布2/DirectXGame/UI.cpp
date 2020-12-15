@@ -40,10 +40,10 @@ void UI::HpGauge(float hp)
 		subHp = 0;
 	}
 	
-	hpBottom->SetSize({ maxHp, 50 }); //体力の最大値を設定できるようにする
-	hpMidle->SetSize({ subHp, 50 });   //現在の体力(減少前)
-	hpTop->SetSize({ hp, 50 });   //現在の体力
-	hpGauge->SetSize({ maxHp,50 });
+	hpBottom->SetSize({ maxHp*5, 50 }); //体力の最大値を設定できるようにする
+	hpMidle->SetSize({ subHp*5, 50 });   //現在の体力(減少前)
+	hpTop->SetSize({ hp*5, 50 });   //現在の体力
+	hpGauge->SetSize({ maxHp*5,50 });
 
 
 }

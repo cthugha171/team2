@@ -50,4 +50,5 @@ private:
 
 	bool oto = false;
 	float time = 0;
+	float time2 = 0;
 };
