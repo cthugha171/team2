@@ -50,9 +50,20 @@ EnemySpawner::~EnemySpawner()
 	}
 }
 
-void EnemySpawner::spawn(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev)
+void EnemySpawner::spawn(XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev)
 {
-	Enemy* enemy = cache.Instance(state, pos, eobj, dev);
+	if (changestate <= 1)
+	{
+		ste = escape;
+		changestate++;
+	}
+	else if (changestate >= 2)
+	{
+		ste = lookat;
+		changestate = 0;
+	}
+
+	Enemy* enemy = cache.Instance(ste, pos, eobj, dev);
 
 	enemyList.push_back(enemy);
 }
@@ -71,6 +82,7 @@ void EnemySpawner::Update(Camera* camera, Player* other)
 		{
 			cache.Cache(*it);
 			it = enemyList.erase(it);
+			end++;
 			continue;
 		}
 		it++;
@@ -93,4 +105,9 @@ Enemy* EnemySpawner::GetEnemy()
 		it++;
 		continue;
 	}
+}
+
+int EnemySpawner::GetEndFlag()
+{
+	return end;
 }

@@ -13,7 +13,7 @@ public:
 	void Shot(const XMFLOAT3& pos, Object3d* bullet);
 
 	//çXêV
-	void Update(Enemy* enemy, Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp);
+	void Update(Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp);
 
 	void Draw();
 

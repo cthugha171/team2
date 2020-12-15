@@ -1,0 +1,35 @@
+#pragma once
+#pragma once
+#include "IScene.h"
+#include "Sprite.h"
+#include "DirectXCommon.h"//#include "DirecXInit.h"
+#include "Input.h"
+#include "Model.h"
+#include "Object3d.h"
+#include "DeltaTime.h"
+#include "Audio.h"
+
+class GameOverScene:public IScene
+{
+public:
+	void Initialize(DirectXCommon* directXInit);
+
+	void Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp);
+
+	void Draw(DirectXCommon* directXInit);
+
+	void Delete();
+
+private:
+	Sprite* overBG = nullptr;
+	Sprite* overName = nullptr;
+	Sprite* overPushKey = nullptr;
+	DeltaTime* deltaTime;
+	float time = 0;
+	float colorGB = 0;
+
+	bool colorChange = true;
+	Audio* bgm;
+
+};
+

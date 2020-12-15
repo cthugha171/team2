@@ -23,7 +23,7 @@ void Enemy::Initialize(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* 
 	{
 	case lookat:
 		hp = 10;
-		speed = 2.0f;
+		speed = 0.5f;
 		break;
 	case escape:
 		hp = 5;
@@ -85,16 +85,11 @@ void Enemy::LookUp(Player* player)
 
 	float rad_xy = atan2(distx, disty);
 
-	position.x -= cos(rad_xy) * speed;
-	position.y -= sin(rad_xy) * speed;
+	position.x += cos(rad_xy) * speed;
+	position.y += sin(rad_xy) * speed;
 	position.z -= speed;
 
 	eObj->SetPosition(position);
-	if (Collisions(player))
-	{
-		hp = 0;
-	}
-
 }
 
 void Enemy::EscapeUp(Player* player)

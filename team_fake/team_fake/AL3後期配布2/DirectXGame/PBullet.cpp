@@ -16,7 +16,7 @@ void PBullet::Initialize(XMFLOAT3 pos, Object3d* bullet)
 	once = false;
 }
 
-void PBullet::Update(Enemy* enemy,Player*player,MouseInput* mouse,Camera*camera,WinApp*winApp)
+void PBullet::Update(Player*player,MouseInput* mouse,Camera*camera,WinApp*winApp)
 {
 	if (!shot)
 	{
