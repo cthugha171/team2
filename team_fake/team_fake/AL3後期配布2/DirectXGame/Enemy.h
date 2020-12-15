@@ -9,7 +9,7 @@ enum State //enemy行動パターン変化用
 {
 	lookat,//一定の範囲を移動
 	escape,//プレイヤーから逃げる
-	shot,//攻撃する
+	shots,//攻撃する
 };
 
 class Player;
@@ -60,6 +60,8 @@ private:
 	float distx;
 	float disty;
 	float speed;
+	float addx;
+	float addy;
 
 	bool isDead;
 	bool once;

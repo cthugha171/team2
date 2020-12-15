@@ -4,9 +4,10 @@
 
 void PBullet::Initialize(XMFLOAT3 pos, Object3d* bullet)
 {
-	position = pos;
+	position = XMFLOAT3(pos.x,pos.y,10);
 	pbObj = bullet;
 	pbObj->SetRadius(1.0f);
+	pbObj->SetScale({ 2,2,2 });
 	speed = 5;
 	col = new Collision();
 	distX = 0;
@@ -32,23 +33,27 @@ void PBullet::Move(Player* player, MouseInput* mouse,Camera*camera,WinApp*winApp
 		//distX = mouse->GetMousePos(*camera, winApp).x - player->GetPosition().x;
 		//distY = mouse->GetMousePos(*camera, winApp).y - player->GetPosition().y;
 
-		distX = player->GetRotation().x;
-		distY = player->GetRotation().y;
+		distX = player->ShotDirection().x - player->GetPosition().x;
+		distY = player->ShotDirection().y - player->GetPosition().y;
 		float c = std::hypot(distX, distY);
 
 		//ê≥ãKâª
-		float mag = 1 / c;
+		mag = 1 / c;
 
 		distX *= mag;
-		distY *= mag;  
+		distY *= mag;
 
 		once = true;
 	}
 
+
 	float radian = atan2(distY, distX);
 	
-	position.x += cos(radian) * speed;
-	position.y += sin(radian) * speed;
+	position.x += cos(radian) * speed*0.5f;
+	position.y += sin(radian) * speed*0.5f;
+
+	/*position.x += distX * speed;
+	position.y += distY * speed;*/
 
 	position.z += speed;
 

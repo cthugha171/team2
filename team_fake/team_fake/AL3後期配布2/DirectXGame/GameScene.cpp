@@ -3,6 +3,9 @@
 void GameScene::Initialize(DirectXCommon* directXInit)
 {
 	this->directXinit = directXInit;
+	epos = XMFLOAT3(0, 0, 50);
+
+	deltaTime = new DeltaTime();
 
 	objground = Object3d::Create();
 	ground = Model::CreateFromOBJ("ground");
@@ -21,11 +24,9 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	eModel = Model::CreateFromOBJ("enemy");
 	eObj->SetModel(eModel);
 	enemy = new Enemy();
-	enemy->Initialize(escape, { 0,0,0 }, eObj, directXInit->GetDevice());
+	enemy->Initialize(escape, { 0,0,50 }, eObj, directXInit->GetDevice());
 
-	pbObj = Object3d::Create();
 	pbModel = Model::CreateFromOBJ("bullet");
-	pbObj->SetModel(pbModel);
 
 	ui = new UI();
 	ui->Initialize();
@@ -34,14 +35,23 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 
 void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
+	time += deltaTime->deltaTime();
 	player->Update(camera, input);
 
 	if (player->Shot(mouse))
 	{
-		playerShot.Shot(player->GetPosition(), pbObj);
+		playerShot.Shot(player->GetPosition(), bobj.create(pbModel));
+	}
+
+	if (time / 3>=1)
+	{
+		eneSpawn.spawn(escape,epos,eneObj.create(eModel),directXinit->GetDevice());
+		time = 0;
 	}
 
 	enemy->Update(camera, player);
+
+	eneSpawn.Update(camera, player);
 
 	playerShot.Update(enemy, player, mouse, camera, winApp);
 
@@ -49,6 +59,18 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
+	for (auto it = playerShot.shotList.begin(); it != playerShot.shotList.end();)
+	{
+		for (auto itr = eneSpawn.enemyList.begin(); itr != eneSpawn.enemyList.end();)
+		{
+			if ((*it)->Collisions(*itr))
+			{
+				(*itr)->Damage(10);
+			}
+			itr++;
+		}
+		it++;
+	}
 
 	/*if (input->isKeyDown(DIK_ESCAPE))
 	{
@@ -77,6 +99,8 @@ void GameScene::Draw(DirectXCommon* directXinit)
 	player->Draw();
 
 	enemy->Draw();
+
+	eneSpawn.Draw();
 
 	playerShot.Draw();
 

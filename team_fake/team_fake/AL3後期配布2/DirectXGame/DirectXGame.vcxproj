@@ -85,6 +85,8 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CreateBulletObj.cpp" />
+    <ClCompile Include="CreateEnemyObject.cpp" />
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
@@ -178,6 +180,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionPrimirive.h" />
+    <ClInclude Include="CreateBulletObj.h" />
+    <ClInclude Include="CreateEnemyObject.h" />
     <ClInclude Include="DebugText.h" />
     <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="DirectXCommon.h" />

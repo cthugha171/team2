@@ -16,7 +16,9 @@ public:
 	void Update(Enemy* enemy, Player* player, MouseInput* mouse, Camera* camera, WinApp* winApp);
 
 	void Draw();
-private:
+
 	std::list<PBullet*> shotList;
+private:
 	PBulletCache cache;
+	int max = 0;
 };

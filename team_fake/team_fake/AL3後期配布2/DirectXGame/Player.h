@@ -16,11 +16,11 @@ public:
 
 	void Initialize();
 
-	void Update(Camera* camera, Input* input);
+	void Update(Camera* camera,Input*input);
 
-	void Move(Input* input);
+	void Move();
 
-	void Roll(Input* input);
+	void Roll();
 
 	void Damage(int dmg);
 
@@ -32,18 +32,21 @@ public:
 
 	float GetHp();
 
-
 	Object3d GetObjectShape();
 
 	XMFLOAT3 GetPosition();
 
 	XMFLOAT3 GetRotation();
 
+	XMFLOAT3 ShotDirection();
+
 	void Release();
 
 private:
+	Input* input;
 	MouseInput* mouse;
 	XMFLOAT3 position;
+	XMFLOAT3 shotdirect;
 	XMFLOAT3 camPos;
 	XMFLOAT3 rotate;
 	XMFLOAT3 maxRote;
@@ -52,4 +55,5 @@ private:
 
 	float hp;
 	bool isDead;
+	bool once;
 };

@@ -17,6 +17,8 @@ void Enemy::Initialize(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* 
 	eObj->SetRadius(10);
 	col = new Collision();
 	once = false;
+	addx = 0;
+	addy = 0;
 	switch (ste)
 	{
 	case lookat:
@@ -25,9 +27,9 @@ void Enemy::Initialize(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* 
 		break;
 	case escape:
 		hp = 5;
-		speed = 3.0f;
+		speed = 1.0f;
 		break;
-	case shot:
+	case shots:
 		hp = 20;
 		speed = 1.5f;
 		break;
@@ -39,7 +41,7 @@ void Enemy::Update(Camera* camera, Player* player)
 	if (hp <= 0)
 	{
 		hp = 0;
-
+		isDead = true;
 		return;
 	}
 
@@ -51,7 +53,7 @@ void Enemy::Update(Camera* camera, Player* player)
 	case escape://“¦‚°‚é
 		EscapeUp(player);
 		break;
-	case shot://UŒ‚‚·‚é
+	case shots://UŒ‚‚·‚é
 		ShotUp();
 		break;
 	}
@@ -88,6 +90,10 @@ void Enemy::LookUp(Player* player)
 	position.z -= speed;
 
 	eObj->SetPosition(position);
+	if (Collisions(player))
+	{
+		hp = 0;
+	}
 
 }
 
@@ -98,21 +104,43 @@ void Enemy::EscapeUp(Player* player)
 
 	if (x >= 0)
 	{
-		position.x -= speed;
+		if(addx>=25)
+		{
+			goto confirm;
+		}
+		position.x += speed;
+		addx++;
 	}
 	else if (x < 0)
 	{
-		position.x += speed;
+		if (addx <= -25)
+		{
+			goto confirm;
+		}
+		position.x -= speed;
+		addx--;
 	}
 
 	if (y >= 0)
 	{
-		position.y -= speed;
+		if (addy >= 25)
+		{
+			goto confirm;
+		}
+		position.y += speed;
+		addy++;
 	}
 	else if (y < 0)
 	{
-		position.y += speed;
+		if (addx <= -25)
+		{
+			goto confirm;
+		}
+		position.y -= speed;
+		addy--;
 	}
+
+	confirm:
 
 	eObj->SetPosition(position);
 	eObj->SetRotation(rotate);

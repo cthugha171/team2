@@ -8,7 +8,10 @@
 #include "Object3d.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "CreateEnemyObject.h"
+#include "CreateBulletObj.h"
 #include "PlayerShot.h"
+#include "EnemySpawner.h"
 #include "UI.h"
 #include "DeltaTime.h"
 
@@ -35,10 +38,15 @@ private:
 	Object3d* pbObj;
 	Player* player;
 	Enemy* enemy;
+	CreateEnemyObject eneObj;
+	CreateBulletObj bobj;
 	PlayerShot playerShot;
+	EnemySpawner eneSpawn;
 	UI* ui;
 
 	DeltaTime* deltaTime;
+	
+	XMFLOAT3 epos;
 
 	bool oto = false;
 	float time = 0;
