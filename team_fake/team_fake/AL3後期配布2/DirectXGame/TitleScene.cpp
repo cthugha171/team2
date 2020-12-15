@@ -23,6 +23,9 @@ void TitleScene::Initialize(DirectXCommon* directXInit)
 	player->SetRotation(rot);
 	player->SetScale({ 7,7,7 });
 	player->SetPosition({ -5,-5,3 });
+	bgm = new Audio();
+	bgm->initialize();
+	bgm->PlayWave("Resources/kettei-02.wav");
 }
 
 void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
@@ -108,4 +111,6 @@ void TitleScene::Delete()
 	safe_delete(TitlePushKey);
 	safe_delete(player);
 	safe_delete(pModel);
+	//bgm->Discard();
+	//safe_delete(bgm);
 }
