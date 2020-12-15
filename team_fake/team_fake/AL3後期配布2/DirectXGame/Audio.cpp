@@ -9,8 +9,6 @@
 void Audio::initialize()
 {
 	HRESULT hr;
-	//COMシステムを使用可能にする
-	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
 	//XAudioの初期化
 	hr = XAudio2Create(&pXAudio2, flags);
@@ -20,10 +18,7 @@ void Audio::initialize()
 	if (pMasteringVoice == nullptr)
 	{
 		wprintf(L"マスターボイスがnullptrだよ");
-		//COMの破棄
-		CoUninitialize();
 	}
-
 }
 
 void Audio::PlayWave(const char* filename,float volume)

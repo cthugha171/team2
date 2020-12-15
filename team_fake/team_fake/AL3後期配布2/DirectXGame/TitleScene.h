@@ -6,6 +6,7 @@
 #include "Model.h"
 #include "Object3d.h"
 #include "DeltaTime.h"
+#include "Audio.h"
 
 class TitleScene : public IScene
 {
@@ -28,4 +29,5 @@ private:
 	Object3d* player;
 	Model* pModel;
 	bool colorChange = true;
+	Audio* bgm;
 };
