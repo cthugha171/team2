@@ -158,7 +158,7 @@ void Player::Damage(int dmg)
 
 bool Player::Shot(MouseInput* mouse)
 {
-	return mouse->Leftclick();
+	return mouse->isLeftDown();
 }
 
 void Player::Draw()
