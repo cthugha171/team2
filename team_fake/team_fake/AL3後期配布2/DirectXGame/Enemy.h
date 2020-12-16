@@ -41,7 +41,7 @@ public:
 
 	float GetHp();
 
-	Object3d GetObjectShape();
+	Object3d* GetObjectShape();
 
 	XMFLOAT3 GetPosition();
 

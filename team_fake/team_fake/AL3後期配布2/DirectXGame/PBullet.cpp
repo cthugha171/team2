@@ -76,7 +76,7 @@ void PBullet::SetBoolShot(bool value)
 
 bool PBullet::Collisions(Enemy* other)
 {
-	return col->SphereToSphere(pbObj, &other->GetObjectShape());
+	return col->SphereToSphere(pbObj, other->GetObjectShape());
 }
 
 Object3d PBullet::GetObjectShape()

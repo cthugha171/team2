@@ -170,9 +170,9 @@ float Enemy::GetHp()
 	return hp;
 }
 
-Object3d Enemy::GetObjectShape()
+Object3d* Enemy::GetObjectShape()
 {
-	return *eObj;
+	return eObj;
 }
 
 XMFLOAT3 Enemy::GetPosition()
