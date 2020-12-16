@@ -38,8 +38,6 @@ public:
 
 	XMFLOAT3 GetRotation();
 
-	XMFLOAT3 ShotDirection();
-
 	void Release();
 
 private:

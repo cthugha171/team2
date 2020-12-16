@@ -100,6 +100,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MouseInput.cpp" />
+    <ClCompile Include="MoveBack.cpp" />
     <ClCompile Include="Object3d.cpp" />
     <ClCompile Include="PBullet.cpp" />
     <ClCompile Include="PBulletCache.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="MouseInput.h" />
+    <ClInclude Include="MoveBack.h" />
     <ClInclude Include="Object3d.h" />
     <ClInclude Include="PBullet.h" />
     <ClInclude Include="PBulletCache.h" />

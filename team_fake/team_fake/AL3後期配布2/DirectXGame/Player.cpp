@@ -192,45 +192,6 @@ XMFLOAT3 Player::GetRotation()
 	return rotate;
 }
 
-XMFLOAT3 Player::ShotDirection()
-{
-	if (input->isKeyState(DIK_W))
-	{
-		shotdirect.y += 10.0f;
-	}
-	if (input->isKeyState(DIK_S))
-	{
-		shotdirect.y -= 10.0f;
-	}
-	if (input->isKeyState(DIK_A))
-	{
-		shotdirect.x -= 10.0;
-	}
-	if (input->isKeyState(DIK_D))
-	{
-		shotdirect.x += 10.0f;
-	}
-
-	if (shotdirect.x > position.x)
-	{
-		shotdirect.x -= 5.0;
-	}
-	if (shotdirect.x < position.x)
-	{
-		shotdirect.x += 5.0;
-	}
-	if (shotdirect.y > position.y)
-	{
-		shotdirect.y-= 5.0;
-	}
-	if (shotdirect.y < position.y)
-	{
-		shotdirect.y += 5.0;
-	}
-
-	return shotdirect;
-}
-
 void Player::Release()
 {
 }

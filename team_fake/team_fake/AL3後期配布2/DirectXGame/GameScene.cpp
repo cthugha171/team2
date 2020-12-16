@@ -12,6 +12,11 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	ground = Model::CreateFromOBJ("ground");
 	objground->SetModel(ground);
 
+	objback = Object3d::Create();
+	back = Model::CreateFromOBJ("skydome");
+	objback->SetModel(back);
+	backside = new MoveBack(objback);
+
 	//audio = new Audio();
 	//audio->initialize();
 
@@ -47,9 +52,12 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	time2 += deltaTime->deltaTime();
 	player->Update(camera, input);
 
-	if (player->Shot(mouse))
+	backside->Move(input);
+
+	if (player->Shot(mouse)&&time/2>=1)
 	{
 		playerShot.Shot(player->GetPosition(), bobj.create(pbModel));
+		time2 = 0;
 	}
 
 
@@ -75,16 +83,21 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 			{
 				(*itr)->Damage(10);
 			}
-			if ((*itr)->Collisions(player))
-			{
-				player->Damage(20);
-				(*itr)->Damage(10);
-			}
+			
 			itr++;
 		}
 		it++;
 	}
 
+	for (auto itr = eneSpawn.enemyList.begin(); itr != eneSpawn.enemyList.end();)
+	{
+		if ((*itr)->Collisions(player))
+		{
+			player->Damage(20);
+			(*itr)->Damage(10);
+		}
+		itr++;
+	}
 	/*if (input->isKeyDown(DIK_ESCAPE))
 	{
 		time = 0;
@@ -108,6 +121,10 @@ void GameScene::Draw(DirectXCommon* directXinit)
 	Object3d::PreDraw(cmdList);
 
 	//3Dオブジェクトの描画
+	backside->Draw();
+
+	objback->Draw();
+
 	objground->Draw();
 
 	player->Draw();
@@ -134,6 +151,16 @@ void GameScene::Delete()
 	/*audio->Discard();
 	safe_dalete(audio);*/
 	safe_delete(player);
-	safe_delete(enemy);
+	safe_delete(objground);
+	safe_delete(backside);
+	safe_delete(deltaTime);
+	safe_delete(pbModel);
+	safe_delete(pModel);
+	safe_delete(eModel);
+	safe_delete(ground);
+	safe_delete(pObj);
+	safe_delete(eObj);
 	safe_delete(ui);
+	eneSpawn.~EnemySpawner();
+	playerShot.~PlayerShot();
 }

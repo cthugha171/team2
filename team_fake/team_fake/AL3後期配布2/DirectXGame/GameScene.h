@@ -6,6 +6,7 @@
 #include "DirectXCommon.h"//#include "DirecXInit.h"
 #include "Model.h"
 #include "Object3d.h"
+#include "MoveBack.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "CreateEnemyObject.h"
@@ -28,14 +29,17 @@ private:
 	DirectXCommon* directXinit;
 	Audio* audio;
 	Model* ground;
+	Model* back;
 	Model* model;
 	Model* pModel;
 	Model* eModel;
 	Model* pbModel;
 	Object3d* objground;
+	Object3d* objback;
 	Object3d* pObj;
 	Object3d* eObj;
 	Object3d* pbObj;
+	MoveBack* backside;
 	Player* player;
 	Enemy* enemy;
 	CreateEnemyObject eneObj;
