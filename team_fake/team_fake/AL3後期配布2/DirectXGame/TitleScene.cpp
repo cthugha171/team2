@@ -25,13 +25,15 @@ void TitleScene::Initialize(DirectXCommon* directXInit)
 	player->SetPosition({ -5,-5,3 });
 	bgm = new Audio();
 	bgm->initialize();
-	bgm->PlayWave("Resources/kettei-02.wav");
+
 }
 
 void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
 	if (input->isKeyDown(DIK_SPACE))
 	{
+		bgm->PlayWave("Resources/kettei-02.wav");
+		Sleep(500);
 		SceneManager::instance().ChangeScene("Game");
 
 	}

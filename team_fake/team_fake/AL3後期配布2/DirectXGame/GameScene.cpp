@@ -54,7 +54,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	backside->Move(input);
 
-	if (player->Shot(mouse)&&time/2>=1)
+	if (player->Shot(mouse))
 	{
 		playerShot.Shot(player->GetPosition(), bobj.create(pbModel));
 		time2 = 0;

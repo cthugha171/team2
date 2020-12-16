@@ -130,22 +130,24 @@ void Player::Roll()
 	}
 
 	//Œ³‚É–ß‚·
-	if (rotate.x <= 0)
+	if (rotate.x < 0)
 	{
 		rotate.x += 3.0f;
 	}
-	if (rotate.x >= 0)
+	if (rotate.x > -0)
 	{
 		rotate.x -= 3.0f;
 	}
-	if (rotate.z <= 0)
+	if (rotate.z < -0)
 	{
 		rotate.z += 3.0f;
 	}
-	if (rotate.z >= 0)
+	if (rotate.z > 0)
 	{
 		rotate.z -= 3.0f;
 	}
+
+
 
 
 	pObj->SetRotation(rotate);
