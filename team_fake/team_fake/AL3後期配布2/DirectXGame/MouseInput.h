@@ -20,12 +20,21 @@ public:
 
 	XMFLOAT3 GetMousePos(Camera camera, WinApp* winapp);
 
-	bool Leftclick();
-	bool Rightclick();
+	//左クリックが押された瞬間
+	bool isLeftDown();
+	//左クリックが押されている間
+	bool isLeftState();
+
+	//右クリックが押されて瞬間
+	bool isRightDown();
+	//右クリックが押されてる間
+	bool isRightState();
 private:
 	IDirectInput8* m_pDinput;
 	IDirectInputDevice8* m_pDMouse;//マウスデバイス
 	DIMOUSESTATE MouseState;//マウス状態
+	DIMOUSESTATE OldMouseState;
+	const int mInputNum = 0x80;
 	POINT mousepos;
 };
 

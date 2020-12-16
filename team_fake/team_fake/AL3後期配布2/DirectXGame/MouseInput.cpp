@@ -28,6 +28,9 @@ void MouseInput::initialize(WinApp*winapp)
 
 void MouseInput::update()
 {
+	//1ƒtƒŒ[ƒ€‘O‚Ì
+	OldMouseState = MouseState;
+
 	m_pDMouse->Acquire();
 
 	HRESULT hr = m_pDMouse->GetDeviceState(sizeof(DIMOUSESTATE), &MouseState);
@@ -66,14 +69,24 @@ XMFLOAT3 MouseInput::GetMousePos(Camera camera,WinApp* winapp)
 	return LastPos;
 }
 
-bool MouseInput::Leftclick()
+bool MouseInput::isLeftDown()
 {
-	return (MouseState.rgbButtons[0]&0x80);
+	return (MouseState.rgbButtons[0] & mInputNum) && !(OldMouseState.rgbButtons[0] & mInputNum);
 }
 
-bool MouseInput::Rightclick()
+bool MouseInput::isLeftState()
 {
-	return (MouseState.rgbButtons[1] & 0x80);
+	return (MouseState.rgbButtons[0] & mInputNum) && (OldMouseState.rgbButtons[0] & mInputNum);
+}
+
+bool MouseInput::isRightDown()
+{
+	return (MouseState.rgbButtons[1] & mInputNum) && !(OldMouseState.rgbButtons[1] & mInputNum);
+}
+
+bool MouseInput::isRightState()
+{
+	return (MouseState.rgbButtons[1] & mInputNum) && (OldMouseState.rgbButtons[1] & mInputNum);
 }
 
 
