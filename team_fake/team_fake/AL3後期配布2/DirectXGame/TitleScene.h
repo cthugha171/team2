@@ -30,4 +30,5 @@ private:
 	Model* pModel;
 	bool colorChange = true;
 	Audio* bgm;
+	bool sceneChange = false;
 };

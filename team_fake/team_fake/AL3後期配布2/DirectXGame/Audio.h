@@ -64,6 +64,7 @@ public:
 
 	float FadeIN(float TargetVolume, float DeltaTime);
 	void UpdateFade(float TargetVolume, float TargetTime,float DeltaTime);
+	bool endAudioCheck();
 
 	IXAudio2SourceVoice* pSourcVoice = nullptr;
 private:
