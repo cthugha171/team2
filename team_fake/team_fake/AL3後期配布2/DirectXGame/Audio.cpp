@@ -67,14 +67,6 @@ void Audio::PlayWave(const char* filename,float volume)
 		assert(0);
 		return;
 	}
-
-	//再生が終わったか確認していろいろ削除
-	XAUDIO2_VOICE_STATE state;
-	pSourcVoice->GetState(&state);//ソースボイスの状況を取得
-	if (state.BuffersQueued <= 0)
-	{
-		pSourcVoice->DestroyVoice();
-	}	
 }
 
 void Audio::PlayLoopWave(const char* filename, float volume)
@@ -190,4 +182,16 @@ void Audio::UpdateFade(float TargetVolume, float TargetTime,float DeltaTime)
 {
 	float volume = FadeIN(TargetVolume,DeltaTime/TargetTime);
 	setVolume(volume);
+}
+
+bool Audio::endAudioCheck()
+{
+	//再生が終わったか確認していろいろ削除
+	XAUDIO2_VOICE_STATE state;
+	pSourcVoice->GetState(&state);//ソースボイスの状況を取得
+	if (state.BuffersQueued <= 0)
+	{
+		return true;
+	}
+	return false;
 }

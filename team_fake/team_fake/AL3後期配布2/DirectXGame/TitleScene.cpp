@@ -33,9 +33,16 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	if (input->isKeyDown(DIK_SPACE))
 	{
 		bgm->PlayWave("Resources/kettei-02.wav");
-		Sleep(500);
-		SceneManager::instance().ChangeScene("Game");
+		sceneChange = true;
+	}
 
+	if (sceneChange)
+	{
+		if (bgm->endAudioCheck())
+		{
+			SceneManager::instance().ChangeScene("Game");
+		}
+		
 	}
 	//PushKey‚ÌF•ÏX
 	{
