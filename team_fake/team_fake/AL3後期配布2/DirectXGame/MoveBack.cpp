@@ -9,7 +9,7 @@ MoveBack::MoveBack(Object3d* obj)
 	obj->SetRotation({ 0,0,0 });
 }
 
-void MoveBack::Move(Input* input)
+void MoveBack::Move(Input* input,Camera*camera)
 {
 	if (input->isKeyState(DIK_W))
 	{
@@ -29,6 +29,8 @@ void MoveBack::Move(Input* input)
 	}
 
 	obj->SetRotation(rotate);
+
+	obj->Update(camera->GetmatView(), camera->GetmatProjection());
 }
 
 void MoveBack::Draw()

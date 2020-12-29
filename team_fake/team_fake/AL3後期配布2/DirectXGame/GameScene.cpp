@@ -47,23 +47,28 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	{
 		SceneManager::instance().ChangeScene("Over");
 	}
+	XMMATRIX matView = camera->GetmatView();
+	XMMATRIX matPro = camera->GetmatProjection();
+
+	objback->Update(matView,matPro);
+
+	backside->Move(input,camera);
 
 	time += deltaTime->deltaTime();
 	time2 += deltaTime->deltaTime();
 	player->Update(camera, input);
 
-	backside->Move(input);
 
 	if (player->Shot(mouse))
 	{
-		playerShot.Shot(player->GetPosition(), bobj.create(pbModel));
+		playerShot.Shot(player->GetPosition(), others.create(pbModel));
 		time2 = 0;
 	}
 
 
 	if (time / 2>=1)
 	{
-		eneSpawn.spawn(epos,eneObj.create(eModel),directXinit->GetDevice());
+		eneSpawn.spawn(epos,others.create(eModel),directXinit->GetDevice());
 		time = 0;
 	}
 
@@ -121,7 +126,7 @@ void GameScene::Draw(DirectXCommon* directXinit)
 	Object3d::PreDraw(cmdList);
 
 	//3Dオブジェクトの描画
-	backside->Draw();
+	//backside->Draw();
 
 	objback->Draw();
 
@@ -150,17 +155,20 @@ void GameScene::Delete()
 {
 	/*audio->Discard();
 	safe_dalete(audio);*/
-	safe_delete(player);
+	safe_delete(pObj);
+	safe_delete(eObj);
 	safe_delete(objground);
-	safe_delete(backside);
+	safe_delete(objback);
 	safe_delete(deltaTime);
 	safe_delete(pbModel);
 	safe_delete(pModel);
 	safe_delete(eModel);
+	safe_delete(back);
 	safe_delete(ground);
-	safe_delete(pObj);
-	safe_delete(eObj);
+	safe_delete(player);
+	safe_delete(backside);
 	safe_delete(ui);
 	eneSpawn.~EnemySpawner();
 	playerShot.~PlayerShot();
+	others.~CreateObject();
 }

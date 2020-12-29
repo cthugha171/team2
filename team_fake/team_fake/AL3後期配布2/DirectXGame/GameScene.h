@@ -9,8 +9,7 @@
 #include "MoveBack.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "CreateEnemyObject.h"
-#include "CreateBulletObj.h"
+#include "CreateObject.h"
 #include "PlayerShot.h"
 #include "EnemySpawner.h"
 #include "UI.h"
@@ -42,8 +41,7 @@ private:
 	MoveBack* backside;
 	Player* player;
 	Enemy* enemy;
-	CreateEnemyObject eneObj;
-	CreateBulletObj bobj;
+	CreateObject others;
 	PlayerShot playerShot;
 	EnemySpawner eneSpawn;
 	UI* ui;

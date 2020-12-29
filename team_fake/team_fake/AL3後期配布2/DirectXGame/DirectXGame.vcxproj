@@ -87,6 +87,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CreateBulletObj.cpp" />
     <ClCompile Include="CreateEnemyObject.cpp" />
+    <ClCompile Include="CreateObject.cpp" />
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="DirectXCommon.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="CollisionPrimirive.h" />
     <ClInclude Include="CreateBulletObj.h" />
     <ClInclude Include="CreateEnemyObject.h" />
+    <ClInclude Include="CreateObject.h" />
     <ClInclude Include="DebugText.h" />
     <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="DirectXCommon.h" />

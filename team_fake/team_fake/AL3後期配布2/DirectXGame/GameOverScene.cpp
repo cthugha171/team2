@@ -6,9 +6,9 @@
 void GameOverScene::Initialize(DirectXCommon* directXInit)
 {
 	deltaTime = new DeltaTime();
-	Sprite::LoadTexture(0, L"");
-	Sprite::LoadTexture(1, L"");
-	Sprite::LoadTexture(2, L"Resouces/TitilePushKey.png");
+	//Sprite::LoadTexture(0, L"");
+	Sprite::LoadTexture(1, L"Resources/GameOver.png");
+	Sprite::LoadTexture(2, L"Resources/TitilePushKey.png");
 	overBG = Sprite::Create(0, { 0,0 });
 	overName = Sprite::Create(1, { 50,-70 });
 	overPushKey= Sprite::Create(2, { 0,0 });
@@ -57,7 +57,7 @@ void GameOverScene::Draw(DirectXCommon* directXInit)
 
 	Sprite::PreDraw(cmdList);
 
-	overBG->Draw();
+	//overBG->Draw();
 	overName->Draw();
 	overPushKey->Draw();
 

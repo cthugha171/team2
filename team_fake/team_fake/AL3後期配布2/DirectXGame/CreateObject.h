@@ -2,10 +2,11 @@
 #include "Model.h"
 #include "Object3d.h"
 #include<list>
-class CreateEnemyObject
+
+class CreateObject
 {
 public:
-	~CreateEnemyObject();
+	~CreateObject();
 
 	Object3d* create(Model* model);
 
