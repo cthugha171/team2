@@ -4,6 +4,7 @@
 #include<stdio.h>
 #include <cassert>
 #include "Vector2.h"
+//#include "SDKwavafile.h"
 
 
 void Audio::initialize()
@@ -21,7 +22,7 @@ void Audio::initialize()
 	}
 }
 
-void Audio::PlayWave(const char* filename,float volume)
+void Audio::PlayWave(const char* filename, float volume)
 {
 	HRESULT hr;
 	this->filename = filename;
@@ -49,7 +50,14 @@ void Audio::PlayWave(const char* filename,float volume)
 	buf.pAudioData = (BYTE*)pBuffer;
 	buf.pContext = pBuffer;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-	buf.AudioBytes = data.size;
+	if (data.size >= 0)
+	{
+		buf.AudioBytes = data.size;
+	}
+	else if (data.size < 0)
+	{
+		buf.AudioBytes = -data.size;
+	}
 
 	//波形データの再生
 	hr = pSourcVoice->SubmitSourceBuffer(&buf);
@@ -98,7 +106,14 @@ void Audio::PlayLoopWave(const char* filename, float volume)
 	buf.pAudioData = (BYTE*)pBuffer;
 	buf.pContext = pBuffer;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-	buf.AudioBytes = data.size;
+	if (data.size >= 0)
+	{
+		buf.AudioBytes = data.size;
+	}
+	else if (data.size < 0)
+	{
+		buf.AudioBytes = -data.size;
+	}
 	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 
 	//波形データの再生
@@ -117,7 +132,6 @@ void Audio::PlayLoopWave(const char* filename, float volume)
 		assert(0);
 		return;
 	}
-	//pSourcVoice->DestroyVoice();
 }
 
 void Audio::FileOpen()
@@ -146,9 +160,19 @@ void Audio::LoadWavFile()
 	//Dataチャンクの読み込み
 	file.read((char*)&data, sizeof(data));
 
-	//Dataチャンクのデータ部(波形データ)の読み込み
-	pBuffer = new char[data.size];
-	file.read(pBuffer, data.size);
+	if (data.size >= 0)
+	{
+		//Dataチャンクのデータ部(波形データ)の読み込み
+		pBuffer = new char[data.size];
+		file.read(pBuffer, data.size);
+	}
+
+	else if (data.size < 0)
+	{
+		//Dataチャンクのデータ部(波形データ)の読み込み
+		pBuffer = new char[-data.size];
+		file.read(pBuffer, -data.size);
+	}
 
 	//waveファイルを閉じる
 	file.close();
@@ -173,14 +197,14 @@ void Audio::setVolume(float volume)
 
 float Audio::FadeIN(float TargetVolume, float DeltaTime)
 {
-	float vol=Vector2::lerp(this->TargetVolume, TargetVolume, DeltaTime);
+	float vol = Vector2::lerp(this->TargetVolume, TargetVolume, DeltaTime);
 	return vol;
 }
 
 
-void Audio::UpdateFade(float TargetVolume, float TargetTime,float DeltaTime)
+void Audio::UpdateFade(float TargetVolume, float TargetTime, float DeltaTime)
 {
-	float volume = FadeIN(TargetVolume,DeltaTime/TargetTime);
+	float volume = FadeIN(TargetVolume, DeltaTime / TargetTime);
 	setVolume(volume);
 }
 
