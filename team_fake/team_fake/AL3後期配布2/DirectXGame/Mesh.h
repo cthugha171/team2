@@ -98,6 +98,12 @@ public: // メンバ関数
 	/// <returns>インデックスバッファ</returns>
 	const D3D12_INDEX_BUFFER_VIEW& GetIBView() { return ibView; }
 
+	// 頂点データ配列
+	const std::vector<VertexPosNormalUv> Getvertices() { return vertices; }
+
+	// 頂点インデックス配列
+	const std::vector<unsigned short> Getindices() {return indices;}
+
 	/// <summary>
 	/// 描画
 	/// </summary>

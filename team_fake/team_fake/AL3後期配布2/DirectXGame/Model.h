@@ -43,6 +43,20 @@ public: // 静的メンバ関数
 	/// <returns>生成されたモデル</returns>
 	static Model* CreateFromOBJ(const std::string& modelname);
 
+	// 頂点データ配列
+	std::vector<Mesh::VertexPosNormalUv>& Getvertices()
+	{
+		std::vector<Mesh::VertexPosNormalUv> vertices = mesh->Getvertices();
+		return vertices;
+	}
+
+	// 頂点インデックス配列
+	std::vector<unsigned short>& Getindices() 
+	{ 
+		std::vector<unsigned short>indices = mesh->Getindices();
+		return indices; 
+	}
+
 public: // メンバ関数
 	/// <summary>
 	/// デストラクタ
@@ -64,6 +78,8 @@ public: // メンバ関数
 private: // メンバ変数
 	// 名前
 	std::string name;
+	//メッシュ
+	Mesh* mesh;
 	// メッシュコンテナ
 	std::vector<Mesh*> meshes;
 	// マテリアルコンテナ
