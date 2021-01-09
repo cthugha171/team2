@@ -59,7 +59,7 @@ void Model::Initialize(const std::string& modelname)
 	name = modelname;
 
 	// メッシュ生成
-	Mesh* mesh = new Mesh;
+	mesh = new Mesh;
 	int indexCountTex = 0;
 	int indexCountNoTex = 0;
 

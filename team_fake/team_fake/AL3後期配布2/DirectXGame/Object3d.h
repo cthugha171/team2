@@ -115,7 +115,7 @@ public: // メンバ関数
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const XMFLOAT3& GetPosition() { return position; }
+	XMFLOAT3 GetPosition() { return position; }
 
 
 	/// <summary>
