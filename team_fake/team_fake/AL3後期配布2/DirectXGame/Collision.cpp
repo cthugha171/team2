@@ -47,9 +47,9 @@ void Collision::ClosestPtPoint2Triangle(XMFLOAT3* point,Model* triangle, DirectX
 	std::vector<unsigned short> indices = triangle->Getindices();
 	for (auto i = 0; i != indices.size(); ++i)
 	{ 
-		XMFLOAT3* pos0 = &vertices[i].pos;
-		XMFLOAT3* pos1 = &vertices[i+1].pos;
-		XMFLOAT3* pos2 = &vertices[i+2].pos;
+		XMFLOAT3* pos0 = &vertices[indices[i]].pos;
+		XMFLOAT3* pos1 = &vertices[indices[i+1]].pos;
+		XMFLOAT3* pos2 = &vertices[indices[i+2]].pos;
 
 		XMVECTOR p0 = XMLoadFloat3(pos0);
 		XMVECTOR p1 = XMLoadFloat3(pos1);
