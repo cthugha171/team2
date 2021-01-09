@@ -89,6 +89,11 @@ void Enemy::LookUp(Player* player)
 	position.y += sin(rad_xy) * speed;
 	position.z -= speed;
 
+	if (position.y <= 10)
+	{
+		position.y = 10;
+	}
+
 	eObj->SetPosition(position);
 }
 
@@ -99,7 +104,7 @@ void Enemy::EscapeUp(Player* player)
 
 	if (x >= 0)
 	{
-		if(addx>=25)
+		if(addx>=100)
 		{
 			goto confirm;
 		}
@@ -108,7 +113,7 @@ void Enemy::EscapeUp(Player* player)
 	}
 	else if (x < 0)
 	{
-		if (addx <= -25)
+		if (addx <= -100)
 		{
 			goto confirm;
 		}
@@ -118,7 +123,7 @@ void Enemy::EscapeUp(Player* player)
 
 	if (y >= 0)
 	{
-		if (addy >= 25)
+		if (addy >= 100)
 		{
 			goto confirm;
 		}
@@ -127,7 +132,7 @@ void Enemy::EscapeUp(Player* player)
 	}
 	else if (y < 0)
 	{
-		if (addx <= -25)
+		if (addx <= 10)
 		{
 			goto confirm;
 		}
@@ -136,6 +141,11 @@ void Enemy::EscapeUp(Player* player)
 	}
 
 	confirm:
+
+	if (position.y <= 10)
+	{
+		position.y = 10;
+	}
 
 	eObj->SetPosition(position);
 	eObj->SetRotation(rotate);

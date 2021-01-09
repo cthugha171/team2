@@ -18,7 +18,7 @@ public:
 
 	void Update(Camera* camera,Input*input);
 
-	void Move();
+	void Move(Camera* camera);
 
 	void Roll();
 
@@ -45,6 +45,8 @@ private:
 	MouseInput* mouse;
 	XMFLOAT3 position;
 	XMFLOAT3 shotdirect;
+	XMFLOAT3 feyePos;
+	XMFLOAT3 ftargetPos;
 	XMFLOAT3 camPos;
 	XMFLOAT3 rotate;
 	XMFLOAT3 maxRote;

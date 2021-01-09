@@ -25,6 +25,8 @@ void Player::Update(Camera* camera,Input*input)
 	if (!once);
 	{
 		this->input = input;
+		feyePos = camera->getEyePos();
+		ftargetPos = camera->getTargetPos();
 		once = true;
 	}
 
@@ -35,14 +37,14 @@ void Player::Update(Camera* camera,Input*input)
 		isDead = true;
 		return;
 	}
-	Move();
+	Move(camera);
 	Roll();
 	camera->cameraMove(camPos);
 	pObj->Update(camera->GetmatView(), camera->GetmatProjection());
 
 }
 
-void Player::Move()
+void Player::Move(Camera* camera)
 {
 	if (input->isKeyState(DIK_W))
 	{
@@ -73,6 +75,8 @@ void Player::Move()
 		}
 		position.x -= 5.0;
 		camPos.x = -5;
+		feyePos.x -= 5;
+		ftargetPos.x -= 5;
 	}
 	if (input->isKeyState(DIK_D))
 	{
@@ -83,9 +87,19 @@ void Player::Move()
 		}
 		position.x += 5.0f;
 		camPos.x = 5;
+		feyePos.x += 5;
+		ftargetPos.x += 5;
 	}
 
 	confirm:
+
+	if (position.y <= 0)
+	{
+		position.y = 1;
+		camera->setEyePos(feyePos);
+		camera->setTargetPos(ftargetPos);
+		Damage(1);
+	}
 	//position.z += 1.0f;
 	//camPos.z = 1.0f;
 

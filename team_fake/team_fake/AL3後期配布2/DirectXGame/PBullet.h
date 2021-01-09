@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "Vector3.h"
 
 class Player;
 class Enemy;
@@ -30,6 +31,8 @@ private:
 	XMFLOAT3 position;
 	Object3d* pbObj;
 	Collision* col;
+
+	Vector3 dist;
 
 	float speed;
 	float distX;

@@ -9,6 +9,8 @@ public:
 
 	void Update(Camera*camera);
 
+	void Move();
+
 	void Draw();
 
 private:
@@ -16,5 +18,6 @@ private:
 	Object3d* second;
 	XMFLOAT3 firstPos;
 	XMFLOAT3 secondPos;
+	float speed;
 };
 

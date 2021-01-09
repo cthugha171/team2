@@ -9,30 +9,30 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	deltaTime = new DeltaTime();
 
 	objground = Object3d::Create();
-	ground = Model::CreateFromOBJ("ground");
-	objground->SetModel(ground);
-
 	objback = Object3d::Create();
+	pObj = Object3d::Create();
+	eObj = Object3d::Create();
+
+	ground = Model::CreateFromOBJ("ground");
 	back = Model::CreateFromOBJ("skydome");
-	objback->SetModel(back);
-	backside = new MoveBack(objback);
+	pModel = Model::CreateFromOBJ("player");
+	eModel = Model::CreateFromOBJ("enemy");
+	pbModel = Model::CreateFromOBJ("bullet");
 
 	//audio = new Audio();
 	//audio->initialize();
 
-	pObj = Object3d::Create();
-	pModel = Model::CreateFromOBJ("player");
-	pObj->SetModel(pModel);
-	player = new Player(100, {0,0},pObj,directXInit->GetDevice());
-	player->Initialize();
 
-	eObj = Object3d::Create();
-	eModel = Model::CreateFromOBJ("enemy");
+	objground->SetModel(ground);
+	objback->SetModel(back);
+	pObj->SetModel(pModel);
 	eObj->SetModel(eModel);
 
-	pbModel = Model::CreateFromOBJ("bullet");
-
+	backside = new MoveBack(objback);
+	player = new Player(100, {0,0},pObj,directXInit->GetDevice());
 	ui = new UI();
+
+	player->Initialize();
 	ui->Initialize();
 	ui->InitHP(player->GetHp());
 }
@@ -50,13 +50,11 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	XMMATRIX matView = camera->GetmatView();
 	XMMATRIX matPro = camera->GetmatProjection();
 
-	objback->Update(matView,matPro);
 
 	backside->Move(input,camera);
 
 	time += deltaTime->deltaTime();
 	time2 += deltaTime->deltaTime();
-	player->Update(camera, input);
 
 
 	if (player->Shot(mouse))
@@ -72,13 +70,15 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		time = 0;
 	}
 
-	eneSpawn.Update(camera, player);
 
+	objback->Update(matView,matPro);
+	player->Update(camera, input);
+	eneSpawn.Update(camera, player);
 	playerShot.Update(player, mouse, camera, winApp);
+	objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
 	ui->HpGauge(player->GetHp());
 
-	objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
 	for (auto it = playerShot.shotList.begin(); it != playerShot.shotList.end();)
 	{
