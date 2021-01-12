@@ -38,7 +38,7 @@ void PBullet::Move(Player* player, MouseInput* mouse,Camera*camera,WinApp*winApp
 		dist.z = player->GetRotation().z;
 
 		//ê≥ãKâª
-		dist=dist.normalize();
+		dist = dist.normalize();
 
 		once = true;
 	}

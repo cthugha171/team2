@@ -7,11 +7,13 @@
 #include "Model.h"
 #include "Object3d.h"
 #include "MoveBack.h"
+#include "MoveGround.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "CreateObject.h"
 #include "PlayerShot.h"
 #include "EnemySpawner.h"
+#include "BuildingSpawner.h"
 #include "UI.h"
 #include "DeltaTime.h"
 
@@ -33,17 +35,21 @@ private:
 	Model* pModel;
 	Model* eModel;
 	Model* pbModel;
+	Model* building;
 	Object3d* objground;
+	Object3d* objground2;
 	Object3d* objback;
 	Object3d* pObj;
 	Object3d* eObj;
 	Object3d* pbObj;
 	MoveBack* backside;
+	MoveGround* moveGround;
 	Player* player;
 	Enemy* enemy;
 	CreateObject others;
 	PlayerShot playerShot;
 	EnemySpawner eneSpawn;
+	BuildingSpawner bSpawn;
 	UI* ui;
 
 	DeltaTime* deltaTime;

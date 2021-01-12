@@ -31,8 +31,8 @@ void MoveGround::Move()
 		secondPos.z = 50;
 	}
 
-	firstPos.z += speed;
-	secondPos.z += speed;
+	firstPos.z -= speed;
+	secondPos.z -= speed;
 
 	first->SetPosition(firstPos);
 	second->SetPosition(secondPos);
