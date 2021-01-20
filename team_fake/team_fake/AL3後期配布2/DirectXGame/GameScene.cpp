@@ -32,7 +32,7 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	eObj->SetModel(eModel);
 
 	backside = new MoveBack(objback);
-	player = new Player(100, {0,0},pObj,directXInit->GetDevice());
+	player = new Player(100, {0,10},pObj,directXInit->GetDevice());
 	moveGround = new MoveGround();
 	ui = new UI();
 
@@ -114,14 +114,14 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		itr++;
 	}
 
-	for (auto itre = bSpawn.BuildingList.begin(); itre != bSpawn.BuildingList.end();)
+	/*for (auto itre = bSpawn.BuildingList.begin(); itre != bSpawn.BuildingList.end();)
 	{
 		if ((*itre)->Collitions(player, building))
 		{
 			player->Damage(10);
 		}
 		itre++;
-	}
+	}*/
 	/*if (input->isKeyDown(DIK_ESCAPE))
 	{
 		time = 0;

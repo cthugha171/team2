@@ -11,12 +11,17 @@ void UI::Initialize()
 	Sprite::LoadTexture(0, L"Resources/white.png");//背面
 	//Sprite::LoadTexture(1, L"Resources/white.png");//本体1
 	//Sprite::LoadTexture(2, L"Resources/white.png");//本体2
-	Sprite::LoadTexture(3, L"Resources/hpGauge.png");//前面
+	Sprite::LoadTexture(1, L"Resources/hpGauge.png");//前面
 	
 	hpBottom = Sprite::Create(0, { 50,50 }, { 0.5f,0.5f,0.5f,1 });
 	hpMidle = Sprite::Create(0, { 50,50 }, { 1.0f,0.0f,0.0f,1 });
 	hpTop = Sprite::Create(0, { 50,50 }, { 0.0f,1.0f,0.0f,1 });
-	hpGauge = Sprite::Create(3, { 50,50 });
+	hpGauge = Sprite::Create(1, { 50,50 });
+
+	//ショットの方向用
+	Sprite::LoadTexture(2, L"Resources/target.png");//ターゲット枠
+	shotPos = XMFLOAT2({ 960,540 });
+	shotDist = Sprite::Create(2, shotPos);
 }
 
 void UI::InitHP(float hp)
@@ -54,4 +59,14 @@ void UI::HpDraw()
 	hpMidle->Draw();
 	hpTop->Draw();
 	hpGauge->Draw();
+}
+
+void UI::ShotDistance(XMFLOAT2 dist)
+{
+
+}
+
+void UI::ShotDistDraw()
+{
+	shotDist->Draw();
 }
