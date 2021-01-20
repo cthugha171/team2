@@ -95,7 +95,7 @@ void Player::Move(Camera* camera)
 
 	if (position.y <= 0)
 	{
-		position.y = 1;
+		position.y = 0;
 		camera->setEyePos(feyePos);
 		camera->setTargetPos(ftargetPos);
 		Damage(1);

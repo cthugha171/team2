@@ -32,7 +32,7 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	eObj->SetModel(eModel);
 
 	backside = new MoveBack(objback);
-	player = new Player(100, {0,0},pObj,directXInit->GetDevice());
+	player = new Player(100, {0,10},pObj,directXInit->GetDevice());
 	moveGround = new MoveGround();
 	ui = new UI();
 
