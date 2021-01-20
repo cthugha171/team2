@@ -114,14 +114,14 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		itr++;
 	}
 
-	for (auto itre = bSpawn.BuildingList.begin(); itre != bSpawn.BuildingList.end();)
+	/*for (auto itre = bSpawn.BuildingList.begin(); itre != bSpawn.BuildingList.end();)
 	{
 		if ((*itre)->Collitions(player, building))
 		{
 			player->Damage(10);
 		}
 		itre++;
-	}
+	}*/
 	/*if (input->isKeyDown(DIK_ESCAPE))
 	{
 		time = 0;
