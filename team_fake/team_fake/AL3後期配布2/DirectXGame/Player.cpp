@@ -51,8 +51,8 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y += 5.0f;
-		feyePos.y -= 5;
-		ftargetPos.y -= 5;
+		feyePos.y += 5;
+		ftargetPos.y += 5;
 	}
 	if (input->isKeyState(DIK_S))
 	{
@@ -99,9 +99,7 @@ void Player::Move(Camera* camera)
 		camera->setTargetPos(ftargetPos);
 		Damage(1);
 	}
-	//position.z += 1.0f;
 
-	//camera->cameraMove(camPos);
 	camera->setEyePos(feyePos);
 	camera->setTargetPos(ftargetPos);
 
