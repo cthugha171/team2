@@ -47,7 +47,6 @@ private:
 	XMFLOAT3 shotdirect;
 	XMFLOAT3 feyePos;
 	XMFLOAT3 ftargetPos;
-	XMFLOAT3 camPos;
 	XMFLOAT3 rotate;
 	XMFLOAT3 maxRote;
 	Object3d* pObj;
