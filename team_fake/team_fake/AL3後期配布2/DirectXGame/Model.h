@@ -44,14 +44,14 @@ public: // 静的メンバ関数
 	static Model* CreateFromOBJ(const std::string& modelname);
 
 	// 頂点データ配列
-	std::vector<Mesh::VertexPosNormalUv>& Getvertices()
+	std::vector<Mesh::VertexPosNormalUv> Getvertices()
 	{
 		std::vector<Mesh::VertexPosNormalUv> vertices = mesh->Getvertices();
 		return vertices;
 	}
 
 	// 頂点インデックス配列
-	std::vector<unsigned short>& Getindices() 
+	std::vector<unsigned short> Getindices() 
 	{ 
 		std::vector<unsigned short>indices = mesh->Getindices();
 		return indices; 
