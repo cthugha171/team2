@@ -5,7 +5,6 @@ Player::Player(float hp, XMFLOAT2 pos, Object3d* player, ID3D12Device* dev)
 	this->hp = hp;
 	position = XMFLOAT3(pos.x, pos.y, 0);
 	shotdirect = XMFLOAT3(pos.x, pos.y, 50);
-	camPos = XMFLOAT3(0, 0, 0);
 	rotate = XMFLOAT3(0, 270, 0);
 	maxRote = XMFLOAT3(45.0f, 0, 45.0f);
 	pObj = player;
@@ -30,7 +29,6 @@ void Player::Update(Camera* camera,Input*input)
 		once = true;
 	}
 
-	camPos = { 0,0,0 };
 	if (hp <= 0)
 	{
 		hp = 0;
@@ -39,7 +37,6 @@ void Player::Update(Camera* camera,Input*input)
 	}
 	Move(camera);
 	Roll();
-	camera->cameraMove(camPos);
 	pObj->Update(camera->GetmatView(), camera->GetmatProjection());
 
 }
@@ -54,7 +51,8 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y += 5.0f;
-		camPos.y = 5;
+		feyePos.y -= 5;
+		ftargetPos.y -= 5;
 	}
 	if (input->isKeyState(DIK_S))
 	{
@@ -64,7 +62,8 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y -= 5.0f;
-		camPos.y = -5;
+		feyePos.y -= 5;
+		ftargetPos.y -= 5;
 	}
 	if (input->isKeyState(DIK_A))
 	{
@@ -74,7 +73,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.x -= 5.0;
-		camPos.x = -5;
 		feyePos.x -= 5;
 		ftargetPos.x -= 5;
 	}
@@ -86,7 +84,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.x += 5.0f;
-		camPos.x = 5;
 		feyePos.x += 5;
 		ftargetPos.x += 5;
 	}
@@ -96,12 +93,17 @@ void Player::Move(Camera* camera)
 	if (position.y <= 0)
 	{
 		position.y = 0;
+		feyePos.y = 0;
+		ftargetPos.y = 0;
 		camera->setEyePos(feyePos);
 		camera->setTargetPos(ftargetPos);
 		Damage(1);
 	}
 	//position.z += 1.0f;
-	//camPos.z = 1.0f;
+
+	//camera->cameraMove(camPos);
+	camera->setEyePos(feyePos);
+	camera->setTargetPos(ftargetPos);
 
 	pObj->SetPosition(position);
 }
