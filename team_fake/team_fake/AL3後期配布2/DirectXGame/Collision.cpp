@@ -45,7 +45,7 @@ void Collision::ClosestPtPoint2Triangle(XMFLOAT3* point,Model* triangle, DirectX
 {
 	std::vector<Mesh::VertexPosNormalUv> vertices = triangle->Getvertices();
 	std::vector<unsigned short> indices = triangle->Getindices();
-	for (auto i = 0; i != indices.size()-2; ++i)
+	for (auto i = 0; i != indices.size(); i=i+3)
 	{ 
 		XMFLOAT3* pos0 = &vertices[indices[i]].pos;
 		XMFLOAT3* pos1 = &vertices[indices[i+1]].pos;
@@ -126,7 +126,6 @@ void Collision::ClosestPtPoint2Triangle(XMFLOAT3* point,Model* triangle, DirectX
 		float w = vc * denom;
 		*closest = p0 + p0_p1 * v + p0_p2 * w;
 	}
-
 }
 
 bool Collision::CheckSphere2Triangle(Object3d* shpere, Model* triangle, DirectX::XMVECTOR* inter)
