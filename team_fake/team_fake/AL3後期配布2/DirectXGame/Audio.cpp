@@ -212,10 +212,17 @@ bool Audio::endAudioCheck()
 {
 	//再生が終わったか確認していろいろ削除
 	XAUDIO2_VOICE_STATE state;
-	pSourcVoice->GetState(&state);//ソースボイスの状況を取得
-	if (state.BuffersQueued <= 0)
+	if (pSourcVoice == NULL)
 	{
-		return true;
+		return false;
+	}
+	else
+	{
+		pSourcVoice->GetState(&state);//ソースボイスの状況を取得
+		if (state.BuffersQueued <= 0)
+		{
+			return true;
+		}
 	}
 	return false;
 }

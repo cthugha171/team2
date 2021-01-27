@@ -40,7 +40,7 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	{
 		if (bgm->endAudioCheck())
 		{
-			SceneManager::instance().ChangeScene("Game");
+			SceneManager::instance().ChangeScene("Over");
 		}
 		
 	}
