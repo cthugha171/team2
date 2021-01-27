@@ -154,6 +154,8 @@ public: // メンバ関数
 
 	float GetRadius() { return radius; }
 
+	XMFLOAT3 GetScale() { return scale; }
+
 private: // メンバ変数
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	// 色

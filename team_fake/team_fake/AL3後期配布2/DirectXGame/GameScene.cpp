@@ -74,7 +74,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	if (time / 2>=1)
 	{
 		eneSpawn.spawn(epos,others.create(eModel),directXinit->GetDevice());
-		bSpawn.Spawn({ player->GetPosition().x,epos.y }, others.create(building), others.create(building));
+		bSpawn.Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others.create(building), others.create(building));
 		time = 0;
 	}
 
