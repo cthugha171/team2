@@ -8,7 +8,7 @@ class BuildingCache
 public:
 	~BuildingCache();
 
-	Building* Instance(state state,XMFLOAT2 pos, Object3d* obj, Object3d* obj2);
+	Building* Instance(state state,XMFLOAT2 pos,XMFLAOT3 dist, Object3d* obj, Object3d* obj2);
 
 	void Cache(Building* building);
 
@@ -21,7 +21,7 @@ class BuildingSpawner
 public:
 	~BuildingSpawner();
 
-	void Spawn(XMFLOAT2 pos, Object3d* obj, Object3d* obj2);
+	void Spawn(XMFLOAT2 pos,XMFLOAT3 dist, Object3d* obj, Object3d* obj2);
 
 	void Update(Camera* camera);
 
