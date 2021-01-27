@@ -11,13 +11,13 @@ BuildingCache::~BuildingCache()
 	}
 }
 
-Building* BuildingCache::Instance(state state,XMFLOAT2 pos, Object3d* obj, Object3d* obj2)
+Building* BuildingCache::Instance(state state,XMFLOAT2 pos,XMFLOAT3 dist, Object3d* obj, Object3d* obj2)
 {
 	if (cache.size() > 0)
 	{
 		auto build = cache.front();
 
-		build->Initialize(state,pos, obj,obj2);
+		build->Initialize(state,pos,dist, obj,obj2);
 
 		cache.pop();
 
@@ -44,7 +44,7 @@ BuildingSpawner::~BuildingSpawner()
 	}
 }
 
-void BuildingSpawner::Spawn(XMFLOAT2 pos, Object3d* obj, Object3d* obj2)
+void BuildingSpawner::Spawn(XMFLOAT2 pos,XMFLOAT3 dist, Object3d* obj, Object3d* obj2)
 {
 	if(changestate==0)
 	{
@@ -67,7 +67,7 @@ void BuildingSpawner::Spawn(XMFLOAT2 pos, Object3d* obj, Object3d* obj2)
 
 confirm:
 
-	Building* build = cache.Instance(sta,pos, obj,obj2);
+	Building* build = cache.Instance(sta,pos,dist, obj,obj2);
 
 	BuildingList.push_back(build);
 }

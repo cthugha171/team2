@@ -19,7 +19,7 @@ class Building
 {
 public:
 
-	void Initialize(state state,XMFLOAT2 pos, Object3d* obj, Object3d* obj2);
+	void Initialize(state state,XMFLOAT2 pos,XMFLOAT3 dist, Object3d* obj, Object3d* obj2);
 
 	void Update(Camera* camera);
 
@@ -30,7 +30,8 @@ public:
 	XMFLOAT3 GetPosition();
 
 private:
-	XMFLOAT3 position;
+	XMFLOAT3 position;//2つのオブジェクトの中点
+	XMFLOAT3 dist;//中点までの距離
 	Object3d* obj;
 	Object3d* obj2;
 	Collision* col;
