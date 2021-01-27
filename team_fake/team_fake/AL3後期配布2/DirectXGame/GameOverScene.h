@@ -21,14 +21,21 @@ public:
 	void Delete();
 
 private:
-	Sprite* overBG = nullptr;
-	Sprite* overName = nullptr;
-	Sprite* overPushKey = nullptr;
+	Sprite* GameOverBG = nullptr;
+	Sprite* G = nullptr;
+	Sprite* A = nullptr;
+	Sprite* M = nullptr;
+	Sprite* E = nullptr;
+	Sprite* O = nullptr;
+	Sprite* V = nullptr;
+	Sprite* E2 = nullptr;
+	Sprite* R = nullptr;
 	DeltaTime* deltaTime;
 	float time = 0;
 	float colorGB = 0;
 
 	bool colorChange = true;
+	bool sceneChange = false;
 	Audio* bgm;
 
 };
