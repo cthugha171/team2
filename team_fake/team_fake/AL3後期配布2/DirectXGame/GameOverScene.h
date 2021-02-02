@@ -35,6 +35,7 @@ private:
 	float dTime = 0;
 	float time = 0;
 	float time2 = 0;
+	float time3 = 0;
 	float colorGB = 0;
 	float gx = 0, gy = 0;
 	float ax = 0, ay = 0;
@@ -47,6 +48,8 @@ private:
 
 	bool colorChange = true;
 	bool sceneChange = false;
+	bool Cbgm;
+	Audio* se;
 	Audio* bgm;
 
 };

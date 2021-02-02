@@ -9,6 +9,7 @@ void GameOverScene::Initialize(DirectXCommon* directXInit)
 	deltaTime = new DeltaTime();
 	time = 0;
 	time2 = 0;
+	time3 = 0;
 	Sprite::LoadTexture(0, L"Resources/G.png");
 	Sprite::LoadTexture(1, L"Resources/A.png");
 	Sprite::LoadTexture(2, L"Resources/M.png");
@@ -61,22 +62,34 @@ void GameOverScene::Initialize(DirectXCommon* directXInit)
 	ry = 0;
 	XMFLOAT2 r = XMFLOAT2(rx, ry);
 	R->SetSize(r);
+	se = new Audio();
+	se->initialize();
 	bgm = new Audio();
 	bgm->initialize();
+	Cbgm = true;
 }
 
 void GameOverScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
+	if (Cbgm)
+	{
+		bgm->PlayWave("Resources/gameover3.wav",0.5f);
+		Cbgm = false;
+	}
+	
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		bgm->PlayWave("Resources/kettei-02.wav");
+		se->PlayWave("Resources/kettei-02.wav");
 		sceneChange = true;
 	}
 
 	if (sceneChange)
 	{
-		if (bgm->endAudioCheck())
+		time3 += dTime;
+		bgm->UpdateFade(0, 0.5, time3);
+		if (se->endAudioCheck())
 		{
+			bgm->Discard();
 			SceneManager::instance().ChangeScene("Title");
 		}
 	}

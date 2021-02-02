@@ -23,12 +23,16 @@ private:
 	Sprite* TitleName = nullptr;
 	Sprite* TitlePushKey = nullptr;
 	DeltaTime* deltaTime;
+	float dTime=0;
 	float time=0;
+	float time2=0;
 	float colorGB = 0;
 
 	Object3d* player;
 	Model* pModel;
 	bool colorChange = true;
+	bool Cbgm;
+	Audio* se;
 	Audio* bgm;
 	bool sceneChange = false;
 };
