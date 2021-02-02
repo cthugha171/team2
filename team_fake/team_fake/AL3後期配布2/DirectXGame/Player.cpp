@@ -88,7 +88,40 @@ void Player::Move(Camera* camera)
 		ftargetPos.x += 5;
 	}
 
-	confirm:
+confirm:
+
+	if (feyePos.x >= position.x )
+	{
+		feyePos.x -= 0.5;
+	}
+	if (feyePos.x <= position.x)
+	{
+		feyePos.x += 0.5;
+	}
+	if (feyePos.y >= position.y )
+	{
+		feyePos.y -= 0.5;
+	}
+	if (feyePos.y <= position.y)
+	{
+		feyePos.y += 0.5;
+	}
+	if (ftargetPos.x >= position.x )
+	{
+		ftargetPos.x -= 0.5;
+	}
+	if (ftargetPos.x <= position.x)
+	{
+		ftargetPos.x += 0.5;
+	}
+	if (ftargetPos.y >= position.y )
+	{
+		ftargetPos.y -= 0.5;
+	}
+	if (ftargetPos.y <= position.y)
+	{
+		ftargetPos.y += 0.5;
+	}
 
 	if (position.y <= 0)
 	{
