@@ -51,8 +51,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y += 5.0f;
-		feyePos.y += 5;
-		ftargetPos.y += 5;
 	}
 	if (input->isKeyState(DIK_S))
 	{
@@ -62,8 +60,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y -= 5.0f;
-		feyePos.y -= 5;
-		ftargetPos.y -= 5;
 	}
 	if (input->isKeyState(DIK_A))
 	{
@@ -73,8 +69,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.x -= 5.0;
-		feyePos.x -= 5;
-		ftargetPos.x -= 5;
 	}
 	if (input->isKeyState(DIK_D))
 	{
@@ -84,43 +78,41 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.x += 5.0f;
-		feyePos.x += 5;
-		ftargetPos.x += 5;
 	}
 
 confirm:
 
 	if (feyePos.x >= position.x )
 	{
-		feyePos.x -= 0.5;
+		feyePos.x -= 4;
 	}
 	if (feyePos.x <= position.x)
 	{
-		feyePos.x += 0.5;
+		feyePos.x += 4;
 	}
 	if (feyePos.y >= position.y )
 	{
-		feyePos.y -= 0.5;
+		feyePos.y -= 4;
 	}
 	if (feyePos.y <= position.y)
 	{
-		feyePos.y += 0.5;
+		feyePos.y += 4;
 	}
 	if (ftargetPos.x >= position.x )
 	{
-		ftargetPos.x -= 0.5;
+		ftargetPos.x -= 4;
 	}
 	if (ftargetPos.x <= position.x)
 	{
-		ftargetPos.x += 0.5;
+		ftargetPos.x += 4;
 	}
 	if (ftargetPos.y >= position.y )
 	{
-		ftargetPos.y -= 0.5;
+		ftargetPos.y -= 4;
 	}
 	if (ftargetPos.y <= position.y)
 	{
-		ftargetPos.y += 0.5;
+		ftargetPos.y += 4;
 	}
 
 	if (position.y <= 0)

@@ -57,7 +57,7 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 		if (se->endAudioCheck())
 		{
 			bgm->Discard();
-			SceneManager::instance().ChangeScene("Over");
+			SceneManager::instance().ChangeScene("Game");
 		}
 		
 	}

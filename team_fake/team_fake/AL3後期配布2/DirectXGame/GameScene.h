@@ -46,9 +46,9 @@ private:
 	MoveGround* moveGround;
 	Player* player;
 	Enemy* enemy;
-	CreateObject others;
+	CreateObject* others;
 	PlayerShot playerShot;
-	EnemySpawner eneSpawn;
+	EnemySpawner* eneSpawn;
 	BuildingSpawner bSpawn;
 	UI* ui;
 
@@ -56,7 +56,14 @@ private:
 	
 	XMFLOAT3 epos;
 
+	bool Cbgm;
+	Audio* se;
+	Audio* bgm;
+	bool sceneChange = false;
+
 	bool oto = false;
 	float time = 0;
+
+	float dTime = 0;
 	float time2 = 0;
 };

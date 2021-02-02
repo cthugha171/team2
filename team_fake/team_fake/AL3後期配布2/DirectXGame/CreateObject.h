@@ -6,6 +6,7 @@
 class CreateObject
 {
 public:
+	CreateObject();
 	~CreateObject();
 
 	Object3d* create(Model* model);

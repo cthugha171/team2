@@ -42,6 +42,20 @@ void EnemyCache::Cache(Enemy* enemy)
 
 
 
+EnemySpawner::EnemySpawner()
+{
+	//リストの中身が空かを確認
+	if (enemyList.size() == 0)
+	{
+		return;
+	}
+	//空じゃなければ消す
+	for (auto enemy : enemyList)
+	{
+		delete enemy;
+	}
+}
+
 EnemySpawner::~EnemySpawner()
 {
 	for (auto enemy : enemyList)

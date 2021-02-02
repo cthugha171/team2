@@ -24,6 +24,10 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	//audio = new Audio();
 	//audio->initialize();
 
+	se = new Audio();
+	se->initialize();
+	bgm = new Audio();
+	bgm->initialize();
 
 	objground->SetModel(ground);
 	objground2->SetModel(ground);
@@ -35,46 +39,69 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	player = new Player(100, {0,10},pObj,directXInit->GetDevice());
 	moveGround = new MoveGround();
 	ui = new UI();
+	eneSpawn = new EnemySpawner();
+	others = new CreateObject();
 
 	player->Initialize();
 	moveGround->Initialize(objground, objground2, 5);
 	ui->Initialize();
 	ui->InitHP(player->GetHp());
+
+	dTime = 0;
+	time2 = 0;
+	sceneChange = false;
+	Cbgm = true;
 }
 
 void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
+	dTime = deltaTime->deltaTime();
+	if (bgm->endAudioCheck() || Cbgm)
+	{
+		bgm->PlayWave("Resources/bgm_game.wav", 0.3f);
+		Cbgm = false;
+	}
+
 	if(player->IsDead())
 	{
-		SceneManager::instance().ChangeScene("Over");
+		time2 += dTime;
+		bgm->UpdateFade(0, 0.5, time2);
+
+			bgm->Discard();
+			SceneManager::instance().ChangeScene("Over");
+		
 	}
-	if (eneSpawn.GetEndFlag() >= 100)
+	if (eneSpawn->GetEndFlag() >= 100)
 	{
-		SceneManager::instance().ChangeScene("Over");
+		time2 += dTime;
+		bgm->UpdateFade(0, 0.5, time2);
+
+			bgm->Discard();
+			SceneManager::instance().ChangeScene("Over");
+		
 	}
 	XMMATRIX matView = camera->GetmatView();
 	XMMATRIX matPro = camera->GetmatProjection();
 
 
 	backside->Move(input,camera);
-
-	time += deltaTime->deltaTime();
-	time2 += deltaTime->deltaTime();
+	
+	time += dTime;
 
 	epos = XMFLOAT3(epos.x, player->GetPosition().y, epos.z);
 
 
 	if (player->Shot(mouse))
 	{
-		playerShot.Shot(player->GetPosition(), others.create(pbModel));
-		time2 = 0;
+		se->PlayWave("Resources/shot.wav");
+		playerShot.Shot(player->GetPosition(), others->create(pbModel));
 	}
 
 
 	if (time / 2>=1)
 	{
-		eneSpawn.spawn(epos,others.create(eModel),directXinit->GetDevice());
-		bSpawn.Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others.create(building), others.create(building));
+		eneSpawn->spawn(epos,others->create(eModel),directXinit->GetDevice());
+		bSpawn.Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others->create(building), others->create(building));
 		time = 0;
 	}
 
@@ -82,7 +109,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	objback->Update(matView,matPro);
 	player->Update(camera, input);
 	moveGround->Update(camera);
-	eneSpawn.Update(camera, player);
+	eneSpawn->Update(camera, player);
 	playerShot.Update(player, mouse, camera, winApp);
 	bSpawn.Update(camera);
 	//objground->Update(camera->GetmatView(),camera->GetmatProjection());
@@ -92,10 +119,11 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	for (auto it = playerShot.shotList.begin(); it != playerShot.shotList.end();)
 	{
-		for (auto itr = eneSpawn.enemyList.begin(); itr != eneSpawn.enemyList.end();)
+		for (auto itr = eneSpawn->enemyList.begin(); itr != eneSpawn->enemyList.end();)
 		{
 			if ((*it)->Collisions(*itr))
 			{
+				se->PlayWave("Resources/se_dead.wav");
 				(*itr)->Damage(10);
 			}
 			
@@ -104,7 +132,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		it++;
 	}
 
-	for (auto itr = eneSpawn.enemyList.begin(); itr != eneSpawn.enemyList.end();)
+	for (auto itr = eneSpawn->enemyList.begin(); itr != eneSpawn->enemyList.end();)
 	{
 		if ((*itr)->Collisions(player))
 		{
@@ -118,7 +146,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	{
 		if ((*itre)->Collitions(player, building))
 		{
-			player->Damage(10);
+			player->Damage(1);
 		}
 		itre++;
 	}
@@ -155,7 +183,7 @@ void GameScene::Draw(DirectXCommon* directXinit)
 
 	player->Draw();
 	
-	eneSpawn.Draw();
+	eneSpawn->Draw();
 
 	bSpawn.Draw();
 
@@ -178,7 +206,7 @@ void GameScene::Delete()
 {
 	/*audio->Discard();
 	safe_dalete(audio);*/
-	others.~CreateObject();
+	safe_delete(others);
 	safe_delete(pObj);
 	safe_delete(eObj);
 	safe_delete(objground);
@@ -194,7 +222,7 @@ void GameScene::Delete()
 	safe_delete(player);
 	safe_delete(backside);
 	safe_delete(ui);
-	eneSpawn.~EnemySpawner();
+	safe_delete(eneSpawn);
 	bSpawn.~BuildingSpawner();
 	playerShot.~PlayerShot();
 }

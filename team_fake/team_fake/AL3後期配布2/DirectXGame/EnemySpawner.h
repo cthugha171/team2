@@ -20,6 +20,8 @@ private:
 class EnemySpawner
 {
 public:
+	EnemySpawner();
+
 	~EnemySpawner();
 
 	void spawn(XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev);
