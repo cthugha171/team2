@@ -4,6 +4,9 @@
 #include "Model.h"
 #include "Player.h"
 #include "Collision.h"
+#include <wrl.h>
+#include <d3d12.h>
+#include <DirectXMath.h>
 
 
 enum state 

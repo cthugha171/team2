@@ -2,13 +2,16 @@
 #include "Building.h"
 #include<queue>
 #include<list>
+#include <DirectXMath.h>
+
+using namespace DirectX;
 
 class BuildingCache 
 {
 public:
 	~BuildingCache();
 
-	Building* Instance(state state,XMFLOAT2 pos, XMFLOAT3 dist, Object3d* obj, Object3d* obj2);
+	Building* Instance(state state,XMFLOAT2 pos,XMFLOAT3 dist, Object3d* obj, Object3d* obj2);
 
 	void Cache(Building* building);
 

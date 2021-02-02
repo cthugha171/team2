@@ -185,13 +185,18 @@ void Audio::Discard()
 	pMasteringVoice->DestroyVoice();
 
 	pXAudio2->Release();
-
-	CoUninitialize();
 }
 
 void Audio::setVolume(float volume)
 {
-	float TargetVolume = volume * volume;
+	if (volume>0)
+	{
+		TargetVolume = volume * volume;
+	}
+	else
+	{
+		TargetVolume = 0;
+	}
 	pSourcVoice->SetVolume(TargetVolume);
 }
 
@@ -210,7 +215,7 @@ void Audio::UpdateFade(float TargetVolume, float TargetTime, float DeltaTime)
 
 bool Audio::endAudioCheck()
 {
-	//再生が終わったか確認していろいろ削除
+	//再生が終わったか確認
 	XAUDIO2_VOICE_STATE state;
 	if (pSourcVoice == NULL)
 	{
@@ -225,4 +230,14 @@ bool Audio::endAudioCheck()
 		}
 	}
 	return false;
+}
+
+bool Audio::CheckAudio()
+{
+	XAUDIO2_VOICE_STATE state;
+	if (pSourcVoice == NULL)
+	{
+		return false;
+	}
+	return true;
 }
