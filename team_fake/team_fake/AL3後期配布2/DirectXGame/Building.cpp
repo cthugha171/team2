@@ -1,5 +1,8 @@
 #include "Building.h"
 
+using namespace DirectX;
+using namespace Microsoft::WRL;
+
 void Building::Initialize(state state,XMFLOAT2 pos ,XMFLOAT3 dist , Object3d* obj,Object3d* obj2)
 {
 	position = XMFLOAT3({ pos.x,0,100 });
@@ -50,14 +53,14 @@ bool Building::Collitions(Player* player,Model*mod)
 		return true;
 	}
 	return false;*/
-	XMFLAOT3 posA = position + dist;
-	XMFLOAT3 posB = position - dist;
+	XMFLOAT3 posA = XMFLOAT3({ position.x + dist.x ,position.y+dist.y,position.z+dist.z});
+	XMFLOAT3 posB = XMFLOAT3({ position.x - dist.x ,position.y - dist.y,position.z - dist.z });
 
-	XMFLOAT3 frontA = posA - obj->GetScale() / 2;
-	XMFLOAT3 frontB = posB - obj2->GetScale() / 2;
+	XMFLOAT3 frontA = XMFLOAT3({ posA.x -  obj->GetScale().x / 2 ,posA.y - obj->GetScale().y / 2 ,posA.z - obj->GetScale().y / 2 });
+	XMFLOAT3 frontB = XMFLOAT3({ posB.x - obj->GetScale().x / 2 ,posB.y - obj->GetScale().y / 2 ,posB.z - obj->GetScale().y / 2 });
 
-	XMFLOAT3 backA = posA + obj->GetScale()/2;
-	XMFLOAT3 backB = posB + obj2->GetScale()/2;
+	XMFLOAT3 backA = XMFLOAT3({ posA.x + obj->GetScale().x / 2 ,posA.y + obj->GetScale().y / 2 ,posA.z + obj->GetScale().y / 2 });
+	XMFLOAT3 backB = XMFLOAT3({ posB.x + obj->GetScale().x / 2 ,posB.y + obj->GetScale().y / 2 ,posB.z + obj->GetScale().y / 2 });
 
 	if ((player->GetPosition().z >= frontA.z || player->GetPosition().z >= frontB.z) && (player->GetPosition().z <= backA.z || player->GetPosition().z <= backB.z))
 	{

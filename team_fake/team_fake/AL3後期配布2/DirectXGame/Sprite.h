@@ -126,6 +126,8 @@ public: // メンバ関数
 	/// <returns>座標</returns>
 	const XMFLOAT2& GetPosition() { return position; }
 
+	const XMFLOAT2& GetSize() { return size; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>

@@ -3,6 +3,7 @@
 #include "SafeDelete.h"
 #include "Vector2.h"
 
+XMFLOAT2 a;
 void GameOverScene::Initialize(DirectXCommon* directXInit)
 {
 	deltaTime = new DeltaTime();
@@ -18,7 +19,10 @@ void GameOverScene::Initialize(DirectXCommon* directXInit)
 	Sprite::LoadTexture(7, L"Resources/R.png");
 	GameOverBG = Sprite::Create(8, { 0,0 });
 	G = Sprite::Create(0, { 0,0 });
-	//G->SetSize(XMFLOAT2(1000, 1000));
+	a = G->GetSize();
+	a.x = 1;
+	a.y = 1;
+	G->SetSize(a);
 	A = Sprite::Create(1, { 0,0 });
 	M = Sprite::Create(2, { 0,0 });
 	E = Sprite::Create(3, { 0,0 });
@@ -43,7 +47,6 @@ void GameOverScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinA
 			SceneManager::instance().ChangeScene("Title");
 		}
 	}
-	
 
 	////“_–Å—p
 	//{
