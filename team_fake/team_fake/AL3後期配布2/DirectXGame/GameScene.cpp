@@ -27,7 +27,7 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	se = new Audio();
 	se->initialize();
 	se->LoadWave(1, L"Resources/shot.wav");
-	se->LoadWave(2, L"Resources / se_dead.wav");
+	se->LoadWave(2, L"Resources/se_dead.wav");
 	bgm = new Audio();
 	bgm->initialize();
 	bgm->LoadWave(1, L"Resources/bgm_game.wav");
