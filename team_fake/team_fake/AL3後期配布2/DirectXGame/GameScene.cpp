@@ -75,16 +75,16 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		bgm->UpdateFade(0, 0.5, time2);
 
 			bgm->Discard();
-			SceneManager::instance().ChangeScene("Clear");
+			SceneManager::instance().ChangeScene("Over");
 		
 	}
-	if (eneSpawn->GetEndFlag() >= 100)
+	if (time>=60)
 	{
 		time2 += dTime;
 		bgm->UpdateFade(0, 0.5, time2);
 
 			bgm->Discard();
-			SceneManager::instance().ChangeScene("Over");
+			SceneManager::instance().ChangeScene("Clear");
 		
 	}
 	XMMATRIX matView = camera->GetmatView();
