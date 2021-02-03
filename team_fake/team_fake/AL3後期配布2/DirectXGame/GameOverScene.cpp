@@ -64,8 +64,10 @@ void GameOverScene::Initialize(DirectXCommon* directXInit)
 	R->SetSize(r);
 	se = new Audio();
 	se->initialize();
+	se->LoadWave(1,L"Resources/kettei-02.wav");
 	bgm = new Audio();
 	bgm->initialize();
+	bgm->LoadWave(1, L"Resources/gameover3.wav");
 	Cbgm = true;
 }
 
@@ -73,13 +75,13 @@ void GameOverScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinA
 {
 	if (Cbgm)
 	{
-		bgm->PlayWave("Resources/gameover3.wav",0.5f);
+		bgm->PlayWave(1,0.5f);
 		Cbgm = false;
 	}
 	
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		se->PlayWave("Resources/kettei-02.wav");
+		se->PlayWave(1);
 		sceneChange = true;
 	}
 
