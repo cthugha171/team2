@@ -89,7 +89,7 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		se->PlayWave(1);
+		se->PlayWave(0.5f);
 		sceneChange = true;
 	}
 
