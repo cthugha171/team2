@@ -12,12 +12,12 @@ void GameClearScene::Initialize(DirectXCommon* directXInit)
 	Sprite::LoadTexture(1, L"Resources/A.png");
 	Sprite::LoadTexture(2, L"Resources/M.png");
 	Sprite::LoadTexture(3, L"Resources/E.png");
-	Sprite::LoadTexture(4, L"Resources/O.png");
-	Sprite::LoadTexture(5, L"Resources/V.png");
-	Sprite::LoadTexture(6, L"Resources/E2.png");
-	Sprite::LoadTexture(7, L"Resources/R.png");
-	Sprite::LoadTexture(8, L"Resources/GameOverBG.png");
-	Sprite::LoadTexture(9, L"Resources/TitilePushKey.png");
+	Sprite::LoadTexture(4, L"Resources/C.png");
+	Sprite::LoadTexture(5, L"Resources/L.png");
+	//Sprite::LoadTexture(6, L"Resources/E2.png");
+	Sprite::LoadTexture(6, L"Resources/R.png");
+	Sprite::LoadTexture(7, L"Resources/GameOverBG.png");
+	Sprite::LoadTexture(8, L"Resources/TitilePushKey.png");
 	clearBG = Sprite::Create(8, { 0,0 });
 	clearPushKey = Sprite::Create(9, { 0,0 });
 	G = Sprite::Create(0, { 500,250 });
@@ -50,17 +50,17 @@ void GameClearScene::Initialize(DirectXCommon* directXInit)
 	ly = 0;
 	XMFLOAT2 v = XMFLOAT2(lx, ly);
 	L->SetSize(v);
-	E2 = Sprite::Create(6, { 950,550 });
+	E2 = Sprite::Create(3, { 950,550 });
 	e2x = 0;
 	e2y = 0;
 	XMFLOAT2 e2 = XMFLOAT2(e2x, e2y);
 	E2->SetSize(e2);
-	A2 = Sprite::Create(6, { 1200,550 });
+	A2 = Sprite::Create(1, { 1200,550 });
 	a2x = 0;
 	a2y = 0;
 	XMFLOAT2 a2 = XMFLOAT2(a2x, a2y);
 	A2->SetSize(a2);
-	R = Sprite::Create(7, { 1450,550 });
+	R = Sprite::Create(6, { 1450,550 });
 	rx = 0;
 	ry = 0;
 	XMFLOAT2 r = XMFLOAT2(rx, ry);
@@ -116,56 +116,56 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 			XMFLOAT2 g = XMFLOAT2(gx, gy);
 			G->SetSize(g);
 		}
-		if (ax <= 184 && time >= 0.6)
+		if (ax <= 184 && time >= 0.3)
 		{
 			ax += 2;
 			ay += 2;
 			XMFLOAT2 a = XMFLOAT2(ax, ay);
 			A->SetSize(a);
 		}
-		if (mx <= 184 && time >= 1.2)
+		if (mx <= 184 && time >= 0.6)
 		{
 			mx += 2;
 			my += 2;
 			XMFLOAT2 m = XMFLOAT2(mx, my);
 			M->SetSize(m);
 		}
-		if (ex <= 184 && time >= 1.8)
+		if (ex <= 184 && time >= 0.9)
 		{
 			ex += 2;
 			ey += 2;
 			XMFLOAT2 e = XMFLOAT2(ex, ey);
 			E->SetSize(e);
 		}
-		if (cx <= 184 && time >= 2.4)
+		if (cx <= 184 && time >= 1.2)
 		{
 			cx += 2;
 			cy += 2;
 			XMFLOAT2 o = XMFLOAT2(cx, cy);
 			C->SetSize(o);
 		}
-		if (lx <= 184 && time >= 3.0)
+		if (lx <= 184 && time >= 1.5)
 		{
 			lx += 2;
 			ly += 2;
 			XMFLOAT2 v = XMFLOAT2(lx, ly);
 			L->SetSize(v);
 		}
-		if (e2x <= 184 && time >= 3.6)
+		if (e2x <= 184 && time >= 1.8)
 		{
 			e2x += 2;
 			e2y += 2;
 			XMFLOAT2 e2 = XMFLOAT2(e2x, e2y);
 			E2->SetSize(e2);
 		}
-		if (a2x <= 184 && time >= 4.2)
+		if (a2x <= 184 && time >= 2.1)
 		{
 			a2x += 2;
 			a2y += 2;
 			XMFLOAT2 e2 = XMFLOAT2(a2x, a2y);
 			A2->SetSize(e2);
 		}
-		if (rx <= 184 && time >= 5.6)
+		if (rx <= 184 && time >= 2.4)
 		{
 			rx += 2;
 			ry += 2;
