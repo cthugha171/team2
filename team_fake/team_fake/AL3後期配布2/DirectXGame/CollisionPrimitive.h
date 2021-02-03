@@ -26,3 +26,14 @@ struct Plane
 	// 原点(0,0,0)からの距離
 	float distance = 0.0f;
 };
+
+/// <summary>
+/// 矩形
+/// </summary>
+struct Rectangles
+{
+	//中心点
+	DirectX::XMFLOAT3 center{ 0,0,0 };
+	//矩形のサイズ
+	DirectX::XMFLOAT3 size{ 10.0f,10.0f,10.0f };
+};

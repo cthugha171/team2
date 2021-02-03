@@ -7,6 +7,7 @@
 #include <wrl.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
+#include "CollisionPrimitive.h"
 
 
 enum state 
@@ -38,4 +39,7 @@ private:
 	Object3d* obj;
 	Object3d* obj2;
 	Collision* col;
+
+	Rectangles* rect;
+	Rectangles* rect2;
 };
