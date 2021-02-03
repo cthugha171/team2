@@ -26,11 +26,13 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 
 	se = new Audio();
 	se->initialize();
-	se->LoadWave(1, L"Resources/shot.wav");
-	se->LoadWave(2, L"Resources / se_dead.wav");
+	se->LoadWave(L"Resources/shot.wav");
+	se2 = new Audio();
+	se2->initialize();
+	se2->LoadWave(L"Resources/se_dead.wav");
 	bgm = new Audio();
 	bgm->initialize();
-	bgm->LoadWave(1, L"Resources/bgm_game.wav");
+	bgm->LoadWave(L"Resources/bgm_game.wav");
 
 	objground->SetModel(ground);
 	objground2->SetModel(ground);
@@ -63,7 +65,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	dTime = deltaTime->deltaTime();
 	if (bgm->endAudioCheck() || Cbgm)
 	{
-		bgm->PlayWave(1, 0.3f);
+		bgm->PlayWave(0.3f);
 		Cbgm = false;
 	}
 
@@ -72,8 +74,8 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		time2 += dTime;
 		bgm->UpdateFade(0, 0.5, time2);
 
-			bgm->Discard();
-			SceneManager::instance().ChangeScene("Over");
+		bgm->Discard();
+		SceneManager::instance().ChangeScene("Over");
 		
 	}
 	if (eneSpawn->GetEndFlag() >= 100)
@@ -81,8 +83,8 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		time2 += dTime;
 		bgm->UpdateFade(0, 0.5, time2);
 
-			bgm->Discard();
-			SceneManager::instance().ChangeScene("Over");
+		bgm->Discard();
+		SceneManager::instance().ChangeScene("Over");
 		
 	}
 	XMMATRIX matView = camera->GetmatView();
@@ -98,7 +100,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	if (player->Shot(mouse))
 	{
-		se->PlayWave(1);
+		se->PlayWave();
 		playerShot->Shot(player->GetPosition(), others->create(pbModel));
 	}
 
@@ -128,7 +130,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		{
 			if ((*it)->Collisions(*itr))
 			{
-				se->PlayWave(2);
+				se2->PlayWave();
 				(*itr)->Damage(10);
 			}
 			
