@@ -58,6 +58,7 @@ private:
 
 	bool Cbgm;
 	Audio* se;
+	Audio* se2;
 	Audio* bgm;
 	bool sceneChange = false;
 

@@ -21,15 +21,15 @@ void Audio::initialize()
 	}
 }
 
-void Audio::PlayWave(UINT texnumber, float volume)
+void Audio::PlayWave(float volume)
 {
 	HRESULT hr;
 
 	//サウンドの再生
 	WAVEFORMATEX wfex{};
 	//波形フォーマット設定
-	memcpy(&wfex, &format[texnumber].fmt, sizeof(format[texnumber].fmt));
-	wfex.wBitsPerSample = format[texnumber].fmt.nBlockAlign * 8 / format[texnumber].fmt.nChannels;
+	memcpy(&wfex, &format.fmt, sizeof(format.fmt));
+	wfex.wBitsPerSample = format.fmt.nBlockAlign * 8 / format.fmt.nChannels;
 
 	//波形フォーマットを元にSocrceVoiceの生成
 	hr = pXAudio2->CreateSourceVoice(&pSourcVoice, &wfex, 0, 2.0f, &voiceCallback);
@@ -44,13 +44,13 @@ void Audio::PlayWave(UINT texnumber, float volume)
 	buf.pAudioData = (BYTE*)pBuffer;
 	buf.pContext = pBuffer;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-	if (data[texnumber].size >= 0)
+	if (data.size >= 0)
 	{
-		buf.AudioBytes = data[texnumber].size;
+		buf.AudioBytes = data.size;
 	}
-	else if (data[texnumber].size < 0)
+	else if (data.size < 0)
 	{
-		buf.AudioBytes = -data[texnumber].size;
+		buf.AudioBytes = -data.size;
 	}
 
 	//波形データの再生
@@ -123,11 +123,11 @@ void Audio::PlayWave(UINT texnumber, float volume)
 //	}
 //}
 
-void Audio::LoadWave(UINT texnumber, const wchar_t* filename)
+void Audio::LoadWave(const wchar_t* filename)
 {
 	FileOpen(filename);
 
-	LoadWavFile(texnumber);
+	LoadWavFile();
 }
 
 void Audio::FileOpen(const wchar_t* filename)
@@ -139,7 +139,7 @@ void Audio::FileOpen(const wchar_t* filename)
 	}
 }
 
-void Audio::LoadWavFile(UINT texnumber)
+void Audio::LoadWavFile()
 {
 	//RIFFヘッダーの読み込み
 	RiffHeader riff;
@@ -151,23 +151,23 @@ void Audio::LoadWavFile(UINT texnumber)
 	}
 
 	//Formatチャンクの読み込み
-	file.read((char*)&format[texnumber], sizeof(format[texnumber]));
+	file.read((char*)&format, sizeof(format));
 
 	//Dataチャンクの読み込み
-	file.read((char*)&data[texnumber], sizeof(data[texnumber]));
+	file.read((char*)&data, sizeof(data));
 
-	if (data[texnumber].size >= 0)
+	if (data.size >= 0)
 	{
 		//Dataチャンクのデータ部(波形データ)の読み込み
-		pBuffer = new char[data[texnumber].size];
-		file.read(pBuffer, data[texnumber].size);
+		pBuffer = new char[data.size];
+		file.read(pBuffer, data.size);
 	}
 
-	else if (data[texnumber].size < 0)
+	else if (data.size < 0)
 	{
 		//Dataチャンクのデータ部(波形データ)の読み込み
-		pBuffer = new char[-data[texnumber].size];
-		file.read(pBuffer, -data[texnumber].size);
+		pBuffer = new char[-data.size];
+		file.read(pBuffer, -data.size);
 	}
 
 	//waveファイルを閉じる
