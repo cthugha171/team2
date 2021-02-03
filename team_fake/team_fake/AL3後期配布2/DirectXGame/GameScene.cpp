@@ -40,7 +40,9 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	moveGround = new MoveGround();
 	ui = new UI();
 	eneSpawn = new EnemySpawner();
+	playerShot = new PlayerShot();
 	others = new CreateObject();
+	bSpawn = new BuildingSpawner();
 
 	player->Initialize();
 	moveGround->Initialize(objground, objground2, 5);
@@ -94,14 +96,14 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	if (player->Shot(mouse))
 	{
 		se->PlayWave("Resources/shot.wav");
-		playerShot.Shot(player->GetPosition(), others->create(pbModel));
+		playerShot->Shot(player->GetPosition(), others->create(pbModel));
 	}
 
 
 	if (time / 2>=1)
 	{
 		eneSpawn->spawn(epos,others->create(eModel),directXinit->GetDevice());
-		bSpawn.Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others->create(building), others->create(building));
+		bSpawn->Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others->create(building), others->create(building));
 		time = 0;
 	}
 
@@ -110,14 +112,14 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	player->Update(camera, input);
 	moveGround->Update(camera);
 	eneSpawn->Update(camera, player);
-	playerShot.Update(player, mouse, camera, winApp);
-	bSpawn.Update(camera);
+	playerShot->Update(player, mouse, camera, winApp);
+	bSpawn->Update(camera);
 	//objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
 	ui->HpGauge(player->GetHp());
 
 
-	for (auto it = playerShot.shotList.begin(); it != playerShot.shotList.end();)
+	for (auto it = playerShot->shotList.begin(); it != playerShot->shotList.end();)
 	{
 		for (auto itr = eneSpawn->enemyList.begin(); itr != eneSpawn->enemyList.end();)
 		{
@@ -142,7 +144,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		itr++;
 	}
 
-	for (auto itre = bSpawn.BuildingList.begin(); itre != bSpawn.BuildingList.end();)
+	for (auto itre = bSpawn->BuildingList.begin(); itre != bSpawn->BuildingList.end();)
 	{
 		if ((*itre)->Collitions(player, building))
 		{
@@ -185,9 +187,9 @@ void GameScene::Draw(DirectXCommon* directXinit)
 	
 	eneSpawn->Draw();
 
-	bSpawn.Draw();
+	bSpawn->Draw();
 
-	playerShot.Draw();
+	playerShot->Draw();
 
 
 	//3Dオブジェクト描画後取得
@@ -223,6 +225,6 @@ void GameScene::Delete()
 	safe_delete(backside);
 	safe_delete(ui);
 	safe_delete(eneSpawn);
-	bSpawn.~BuildingSpawner();
-	playerShot.~PlayerShot();
+	safe_delete(playerShot);
+	safe_delete(bSpawn);
 }

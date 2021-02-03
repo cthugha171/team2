@@ -2,6 +2,18 @@
 
 class EnemySpawner;
 
+PlayerShot::PlayerShot()
+{
+	if (shotList.size() == 0)
+	{
+		return;
+	}
+	for (auto shot : shotList)
+	{
+		delete shot;
+	}
+}
+
 PlayerShot::~PlayerShot()
 {
 	for (auto shot : shotList)

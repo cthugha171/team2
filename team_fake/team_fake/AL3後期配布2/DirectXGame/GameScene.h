@@ -47,9 +47,9 @@ private:
 	Player* player;
 	Enemy* enemy;
 	CreateObject* others;
-	PlayerShot playerShot;
+	PlayerShot* playerShot;
 	EnemySpawner* eneSpawn;
-	BuildingSpawner bSpawn;
+	BuildingSpawner* bSpawn;
 	UI* ui;
 
 	DeltaTime* deltaTime;

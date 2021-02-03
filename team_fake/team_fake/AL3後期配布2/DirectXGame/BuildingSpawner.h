@@ -22,6 +22,8 @@ private:
 class BuildingSpawner
 {
 public:
+	BuildingSpawner();
+
 	~BuildingSpawner();
 
 	void Spawn(XMFLOAT2 pos,XMFLOAT3 dist, Object3d* obj, Object3d* obj2);

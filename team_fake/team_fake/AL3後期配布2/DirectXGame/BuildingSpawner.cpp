@@ -36,6 +36,19 @@ void BuildingCache::Cache(Building* building)
 	cache.push(building);
 }
 
+BuildingSpawner::BuildingSpawner()
+{
+	if (BuildingList.size() == 0)
+	{
+		return;
+	}
+	for (auto build : BuildingList)
+	{
+		delete build;
+	}
+	
+}
+
 BuildingSpawner::~BuildingSpawner()
 {
 	for (auto build : BuildingList)
