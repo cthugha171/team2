@@ -7,6 +7,7 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "GameOverScene.h"
+#include "GameClearScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
@@ -56,6 +57,7 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	SceneManager::instance().Add("Title", new TitleScene);
 	SceneManager::instance().Add("Game", new GameScene);
 	SceneManager::instance().Add("Over", new GameOverScene);
+	SceneManager::instance().Add("Clear", new GameClearScene);
 	SceneManager::instance().StartScene("Title");
 
 	
