@@ -8,16 +8,18 @@ void GameClearScene::Initialize(DirectXCommon* directXInit)
 	//デルタタイム
 	deltaTime = new DeltaTime();
 	//スプライト関係
-	Sprite::LoadTexture(0, L"Resources/TitileBG.png");
-	Sprite::LoadTexture(1, L"Resources/TitileName.png");
+	Sprite::LoadTexture(0, L"Resources/background.png");
+	Sprite::LoadTexture(1, L"Resources/CLEAR.png");
 	Sprite::LoadTexture(2, L"Resources/TitilePushKey.png");
 	clearBG = Sprite::Create(0, { 0,0 });
 	clearName = Sprite::Create(1, { 50,-70 });
 	clearPushKey = Sprite::Create(2, { 0,0 });
 	se = new Audio();
 	se->initialize();
+	se->LoadWave(1, L"Resources/kettei-02.wav");
 	bgm = new Audio();
 	bgm->initialize();
+	bgm->LoadWave(1, L"Resources/Cubes.wav");
 	dTime = 0;
 	time = 0;
 	time2 = 0;
@@ -30,13 +32,13 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 	dTime = deltaTime->deltaTime();
 	if (bgm->endAudioCheck() || Cbgm)
 	{
-		bgm->PlayWave("Resources/Cubes.wav", 0.5f);
+		bgm->PlayWave(1,0.5f);
 		Cbgm = false;
 	}
 
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		se->PlayWave("Resources/kettei-02.wav");
+		se->PlayWave(1);
 		sceneChange = true;
 	}
 
@@ -48,7 +50,7 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 		if (se->endAudioCheck())
 		{
 			bgm->Discard();
-			SceneManager::instance().ChangeScene("Game");
+			SceneManager::instance().ChangeScene("Title");
 		}
 
 	}

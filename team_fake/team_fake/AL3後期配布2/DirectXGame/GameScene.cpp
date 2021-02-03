@@ -73,7 +73,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		bgm->UpdateFade(0, 0.5, time2);
 
 			bgm->Discard();
-			SceneManager::instance().ChangeScene("Over");
+			SceneManager::instance().ChangeScene("Clear");
 		
 	}
 	if (eneSpawn->GetEndFlag() >= 100)
@@ -128,8 +128,11 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		{
 			if ((*it)->Collisions(*itr))
 			{
-				se->PlayWave(2);
 				(*itr)->Damage(10);
+			}
+			if ((*itr)->IsDead())
+			{
+				se->PlayWave(2);
 			}
 			
 			itr++;
