@@ -16,10 +16,10 @@ void GameClearScene::Initialize(DirectXCommon* directXInit)
 	clearPushKey = Sprite::Create(2, { 0,0 });
 	se = new Audio();
 	se->initialize();
-	se->LoadWave(1, L"Resources/kettei-02.wav");
+	se->LoadWave(L"Resources/kettei-02.wav");
 	bgm = new Audio();
 	bgm->initialize();
-	bgm->LoadWave(1, L"Resources/Cubes.wav");
+	bgm->LoadWave(L"Resources/Cubes.wav");
 	dTime = 0;
 	time = 0;
 	time2 = 0;
@@ -32,13 +32,13 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 	dTime = deltaTime->deltaTime();
 	if (bgm->endAudioCheck() || Cbgm)
 	{
-		bgm->PlayWave(1,0.5f);
+		bgm->PlayWave(0.5f);
 		Cbgm = false;
 	}
 
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		se->PlayWave(1);
+		se->PlayWave(0.5f);
 		sceneChange = true;
 	}
 
