@@ -4,7 +4,6 @@
 #include<stdio.h>
 #include <cassert>
 #include "Vector2.h"
-//#include "SDKwavafile.h"
 
 
 void Audio::initialize()
@@ -22,20 +21,15 @@ void Audio::initialize()
 	}
 }
 
-void Audio::PlayWave(const char* filename, float volume)
+void Audio::PlayWave(UINT texnumber, float volume)
 {
 	HRESULT hr;
-	this->filename = filename;
-
-	FileOpen();
-
-	LoadWavFile();
 
 	//サウンドの再生
 	WAVEFORMATEX wfex{};
 	//波形フォーマット設定
-	memcpy(&wfex, &format.fmt, sizeof(format.fmt));
-	wfex.wBitsPerSample = format.fmt.nBlockAlign * 8 / format.fmt.nChannels;
+	memcpy(&wfex, &format[texnumber].fmt, sizeof(format[texnumber].fmt));
+	wfex.wBitsPerSample = format[texnumber].fmt.nBlockAlign * 8 / format[texnumber].fmt.nChannels;
 
 	//波形フォーマットを元にSocrceVoiceの生成
 	hr = pXAudio2->CreateSourceVoice(&pSourcVoice, &wfex, 0, 2.0f, &voiceCallback);
@@ -50,13 +44,13 @@ void Audio::PlayWave(const char* filename, float volume)
 	buf.pAudioData = (BYTE*)pBuffer;
 	buf.pContext = pBuffer;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-	if (data.size >= 0)
+	if (data[texnumber].size >= 0)
 	{
-		buf.AudioBytes = data.size;
+		buf.AudioBytes = data[texnumber].size;
 	}
-	else if (data.size < 0)
+	else if (data[texnumber].size < 0)
 	{
-		buf.AudioBytes = -data.size;
+		buf.AudioBytes = -data[texnumber].size;
 	}
 
 	//波形データの再生
@@ -77,64 +71,66 @@ void Audio::PlayWave(const char* filename, float volume)
 	}
 }
 
-void Audio::PlayLoopWave(const char* filename, float volume)
+//void Audio::PlayLoopWave(const char* filename, float volume)
+//{
+//	HRESULT hr;
+//
+//	//サウンドの再生
+//	WAVEFORMATEX wfex{};
+//	//波形フォーマット設定
+//	memcpy(&wfex, &format.fmt, sizeof(format.fmt));
+//	wfex.wBitsPerSample = format.fmt.nBlockAlign * 8 / format.fmt.nChannels;
+//
+//	//波形フォーマットを元にSocrceVoiceの生成
+//	IXAudio2SourceVoice* pSourcVoice = nullptr;
+//	hr = pXAudio2->CreateSourceVoice(&pSourcVoice, &wfex);
+//	if FAILED(hr)
+//	{
+//		delete[] pBuffer;
+//		return;
+//	}
+//
+//	//再生する波形データの設定
+//	XAUDIO2_BUFFER buf{};
+//	buf.pAudioData = (BYTE*)pBuffer;
+//	buf.pContext = pBuffer;
+//	buf.Flags = XAUDIO2_END_OF_STREAM;
+//	if (data.size >= 0)
+//	{
+//		buf.AudioBytes = data.size;
+//	}
+//	else if (data.size < 0)
+//	{
+//		buf.AudioBytes = -data.size;
+//	}
+//	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+//
+//	//波形データの再生
+//	hr = pSourcVoice->SubmitSourceBuffer(&buf);
+//	if FAILED(hr) {
+//		delete[] pBuffer;
+//		assert(0);
+//		return;
+//	}
+//
+//	float TargetVolume = volume * volume;
+//	pSourcVoice->SetVolume(TargetVolume);
+//	hr = pSourcVoice->Start();
+//	if FAILED(hr) {
+//		delete[] pBuffer;
+//		assert(0);
+//		return;
+//	}
+//}
+
+void Audio::LoadWave(UINT texnumber, const wchar_t* filename)
 {
-	HRESULT hr;
-	this->filename = filename;
+	FileOpen(filename);
 
-	FileOpen();
-
-	LoadWavFile();
-
-	//サウンドの再生
-	WAVEFORMATEX wfex{};
-	//波形フォーマット設定
-	memcpy(&wfex, &format.fmt, sizeof(format.fmt));
-	wfex.wBitsPerSample = format.fmt.nBlockAlign * 8 / format.fmt.nChannels;
-
-	//波形フォーマットを元にSocrceVoiceの生成
-	IXAudio2SourceVoice* pSourcVoice = nullptr;
-	hr = pXAudio2->CreateSourceVoice(&pSourcVoice, &wfex);
-	if FAILED(hr)
-	{
-		delete[] pBuffer;
-		return;
-	}
-
-	//再生する波形データの設定
-	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = (BYTE*)pBuffer;
-	buf.pContext = pBuffer;
-	buf.Flags = XAUDIO2_END_OF_STREAM;
-	if (data.size >= 0)
-	{
-		buf.AudioBytes = data.size;
-	}
-	else if (data.size < 0)
-	{
-		buf.AudioBytes = -data.size;
-	}
-	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
-
-	//波形データの再生
-	hr = pSourcVoice->SubmitSourceBuffer(&buf);
-	if FAILED(hr) {
-		delete[] pBuffer;
-		assert(0);
-		return;
-	}
-
-	float TargetVolume = volume * volume;
-	pSourcVoice->SetVolume(TargetVolume);
-	hr = pSourcVoice->Start();
-	if FAILED(hr) {
-		delete[] pBuffer;
-		assert(0);
-		return;
-	}
+	LoadWavFile(texnumber);
 }
 
-void Audio::FileOpen()
+void Audio::FileOpen(const wchar_t* filename)
 {
 	file.open(filename, std::ios_base::binary);
 	if (file.fail())
@@ -143,7 +139,7 @@ void Audio::FileOpen()
 	}
 }
 
-void Audio::LoadWavFile()
+void Audio::LoadWavFile(UINT texnumber)
 {
 	//RIFFヘッダーの読み込み
 	RiffHeader riff;
@@ -155,23 +151,23 @@ void Audio::LoadWavFile()
 	}
 
 	//Formatチャンクの読み込み
-	file.read((char*)&format, sizeof(format));
+	file.read((char*)&format[texnumber], sizeof(format[texnumber]));
 
 	//Dataチャンクの読み込み
-	file.read((char*)&data, sizeof(data));
+	file.read((char*)&data[texnumber], sizeof(data[texnumber]));
 
-	if (data.size >= 0)
+	if (data[texnumber].size >= 0)
 	{
 		//Dataチャンクのデータ部(波形データ)の読み込み
-		pBuffer = new char[data.size];
-		file.read(pBuffer, data.size);
+		pBuffer = new char[data[texnumber].size];
+		file.read(pBuffer, data[texnumber].size);
 	}
 
-	else if (data.size < 0)
+	else if (data[texnumber].size < 0)
 	{
 		//Dataチャンクのデータ部(波形データ)の読み込み
-		pBuffer = new char[-data.size];
-		file.read(pBuffer, -data.size);
+		pBuffer = new char[-data[texnumber].size];
+		file.read(pBuffer, -data[texnumber].size);
 	}
 
 	//waveファイルを閉じる

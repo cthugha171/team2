@@ -25,8 +25,10 @@ void TitleScene::Initialize(DirectXCommon* directXInit)
 	player->SetPosition({ -5,-5,3 });
 	se = new Audio();
 	se->initialize();
+	se->LoadWave(1, L"Resources/kettei-02.wav");
  	bgm = new Audio();
 	bgm->initialize();
+	bgm->LoadWave(1, L"Resources/Cubes.wav");
 	dTime = 0;
 	time = 0;
 	time2 = 0;
@@ -39,13 +41,13 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	dTime= deltaTime->deltaTime();
 	if (bgm->endAudioCheck()|| Cbgm)
 	{
-		bgm->PlayWave("Resources/Cubes.wav",0.5f);
+		bgm->PlayWave(1,0.5f);
 		Cbgm = false;
 	}
 	
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		se->PlayWave("Resources/kettei-02.wav");
+		se->PlayWave(1);
 		sceneChange = true;
 	}
 
