@@ -55,7 +55,9 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	ui->InitHP(player->GetHp());
 
 	dTime = 0;
+	time = 0;
 	time2 = 0;
+	time3 = 0;
 	sceneChange = false;
 	Cbgm = true;
 }
@@ -69,7 +71,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 		Cbgm = false;
 	}
 
-	if(player->IsDead())
+	if(player->IsDead()&&time<60)
 	{
 		time2 += dTime;
 		bgm->UpdateFade(0, 0.5, time2);
@@ -94,6 +96,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	backside->Move(input,camera);
 	
 	time += dTime;
+	time3 += dTime;
 
 	epos = XMFLOAT3(epos.x, player->GetPosition().y, epos.z);
 
@@ -105,11 +108,11 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 	}
 
 
-	if (time / 2>=1)
+	if (time3 / 2>=1)
 	{
 		eneSpawn->spawn(epos,others->create(eModel),directXinit->GetDevice());
 		bSpawn->Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others->create(building), others->create(building));
-		time = 0;
+		time3 = 0;
 	}
 
 

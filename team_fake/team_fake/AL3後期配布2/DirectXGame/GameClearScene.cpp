@@ -123,49 +123,49 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 			XMFLOAT2 a = XMFLOAT2(ax, ay);
 			A->SetSize(a);
 		}
-		if (mx <= 184 && time >= 0.6)
+		if (mx <= 184 && time >= 0.9)
 		{
 			mx += 2;
 			my += 2;
 			XMFLOAT2 m = XMFLOAT2(mx, my);
 			M->SetSize(m);
 		}
-		if (ex <= 184 && time >= 0.9)
+		if (ex <= 184 && time >= 1.5)
 		{
 			ex += 2;
 			ey += 2;
 			XMFLOAT2 e = XMFLOAT2(ex, ey);
 			E->SetSize(e);
 		}
-		if (cx <= 184 && time >= 1.2)
+		if (cx <= 184 && time >= 2.1)
 		{
 			cx += 2;
 			cy += 2;
-			XMFLOAT2 o = XMFLOAT2(cx, cy);
-			C->SetSize(o);
+			XMFLOAT2 c = XMFLOAT2(cx, cy);
+			C->SetSize(c);
 		}
-		if (lx <= 184 && time >= 1.5)
+		if (lx <= 184 && time >= 2.7)
 		{
 			lx += 2;
 			ly += 2;
-			XMFLOAT2 v = XMFLOAT2(lx, ly);
-			L->SetSize(v);
+			XMFLOAT2 l = XMFLOAT2(lx, ly);
+			L->SetSize(l);
 		}
-		if (e2x <= 184 && time >= 1.8)
+		if (e2x <= 184 && time >= 3.3)
 		{
 			e2x += 2;
 			e2y += 2;
 			XMFLOAT2 e2 = XMFLOAT2(e2x, e2y);
 			E2->SetSize(e2);
 		}
-		if (a2x <= 184 && time >= 2.1)
+		if (a2x <= 184 && time >= 3.9)
 		{
 			a2x += 2;
 			a2y += 2;
-			XMFLOAT2 e2 = XMFLOAT2(a2x, a2y);
-			A2->SetSize(e2);
+			XMFLOAT2 a2 = XMFLOAT2(a2x, a2y);
+			A2->SetSize(a2);
 		}
-		if (rx <= 184 && time >= 2.4)
+		if (rx <= 184 && time >= 4.5)
 		{
 			rx += 2;
 			ry += 2;
@@ -177,8 +177,8 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 	{
 		if (colorChange)
 		{
-			time += dTime;
-			colorGB = Vector2::lerp(1, 0, time / 3);
+			time2 += dTime;
+			colorGB = Vector2::lerp(1, 0, time2 / 3);
 			clearPushKey->SetColor({ 1,colorGB,colorGB ,1 });
 			if (colorGB < 0)
 			{
@@ -188,8 +188,8 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 
 		else if (colorChange == false)
 		{
-			time += dTime;
-			colorGB = Vector2::lerp(0, 1, time / 3);
+			time2 += dTime;
+			colorGB = Vector2::lerp(0, 1, time2 / 3);
 			clearPushKey->SetColor({ 1,colorGB,colorGB ,1 });
 			if (colorGB >= 1)
 			{
@@ -197,9 +197,9 @@ void GameClearScene::Update(Input* input, MouseInput* mouse, Camera* camera, Win
 			}
 		}
 
-		if (time / 3 >= 1)
+		if (time2 / 3 >= 1)
 		{
-			time = 0;
+			time2 = 0;
 		}
 	}
 }

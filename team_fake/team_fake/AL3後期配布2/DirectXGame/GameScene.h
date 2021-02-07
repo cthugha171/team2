@@ -67,4 +67,5 @@ private:
 
 	float dTime = 0;
 	float time2 = 0;
+	float time3 = 0;
 };
