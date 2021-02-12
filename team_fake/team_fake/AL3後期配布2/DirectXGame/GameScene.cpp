@@ -20,6 +20,7 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	eModel = Model::CreateFromOBJ("enemy");
 	pbModel = Model::CreateFromOBJ("bullet");
 	building = Model::CreateFromOBJ("building");
+	dyingModel = Model::CreateFromOBJ("explosion");
 
 	//audio = new Audio();
 	//audio->initialize();
@@ -110,7 +111,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	if (time3 / 2>=1)
 	{
-		eneSpawn->spawn(epos,others->create(eModel),directXinit->GetDevice());
+		eneSpawn->spawn(epos,others->create(eModel),dyingModel,directXinit->GetDevice());
 		bSpawn->Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others->create(building), others->create(building));
 		time3 = 0;
 	}
@@ -135,10 +136,10 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 			{
 				(*itr)->Damage(10);
 			}
-			if ((*itr)->IsDead())
+			/*if ((*itr)->IsDead())
 			{
 				se2->PlayWave();
-			}
+			}*/
 			
 			itr++;
 		}
@@ -147,9 +148,9 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 
 	for (auto itr = eneSpawn->enemyList.begin(); itr != eneSpawn->enemyList.end();)
 	{
-		if ((*itr)->Collisions(player))
+		if ((*itr)->Collisions(player)&&!(*itr)->IsDying())
 		{
-			player->Damage(20);
+			player->Damage(5);
 			(*itr)->Damage(10);
 		}
 		itr++;
@@ -232,6 +233,7 @@ void GameScene::Delete()
 	safe_delete(back);
 	safe_delete(ground);
 	safe_delete(building);
+	safe_delete(dyingModel);
 	safe_delete(player);
 	safe_delete(backside);
 	safe_delete(ui);

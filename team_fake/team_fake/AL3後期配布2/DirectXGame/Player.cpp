@@ -38,6 +38,7 @@ void Player::Update(Camera* camera,Input*input)
 	Move(camera);
 	Roll();
 	pObj->Update(camera->GetmatView(), camera->GetmatProjection());
+	pObj->SetColor({ 1,1,1 });
 
 }
 
@@ -195,6 +196,7 @@ void Player::Roll()
 void Player::Damage(int dmg)
 {
 	hp -= dmg;
+	pObj->SetColor({ 1,0,0 });
 }
 
 bool Player::Shot(MouseInput* mouse)

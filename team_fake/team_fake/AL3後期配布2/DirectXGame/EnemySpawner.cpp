@@ -12,13 +12,13 @@ EnemyCache::~EnemyCache()
 }
 
 
-Enemy* EnemyCache::Instance(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev)
+Enemy* EnemyCache::Instance(State state, XMFLOAT3 pos, Object3d* eobj,Model*dyingModel, ID3D12Device* dev)
 {
 	if (cache.size() > 0)
 	{
 		auto enemy = cache.front();
 
-		enemy->Initialize(state, pos, eobj, dev);
+		enemy->Initialize(state, pos, eobj,dyingModel, dev);
 
 		cache.pop();
 
@@ -27,7 +27,7 @@ Enemy* EnemyCache::Instance(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Dev
 
 	auto enemy = new Enemy();
 
-	enemy->Initialize(state, pos, eobj, dev);
+	enemy->Initialize(state, pos, eobj,dyingModel, dev);
 
 	return enemy;
 }
@@ -64,7 +64,7 @@ EnemySpawner::~EnemySpawner()
 	}
 }
 
-void EnemySpawner::spawn(XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev)
+void EnemySpawner::spawn(XMFLOAT3 pos, Object3d* eobj,Model*DyingModel, ID3D12Device* dev)
 {
 	if (changestate <= 1)
 	{
@@ -77,7 +77,7 @@ void EnemySpawner::spawn(XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev)
 		changestate = 0;
 	}
 
-	Enemy* enemy = cache.Instance(ste, pos, eobj, dev);
+	Enemy* enemy = cache.Instance(ste, pos, eobj,DyingModel, dev);
 
 	enemyList.push_back(enemy);
 }
@@ -92,7 +92,7 @@ void EnemySpawner::Update(Camera* camera, Player* other)
 			(*it)->Damage(10);
 		}
 
-		if ((*it)->GetHp() < 0)
+		if ((*it)->IsDead())
 		{
 			cache.Cache(*it);
 			it = enemyList.erase(it);

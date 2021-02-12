@@ -36,6 +36,7 @@ private:
 	Model* eModel;
 	Model* pbModel;
 	Model* building;
+	Model* dyingModel;
 	Object3d* objground;
 	Object3d* objground2;
 	Object3d* objback;

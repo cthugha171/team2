@@ -5,16 +5,19 @@ Enemy::Enemy()
 {
 }
 
-void Enemy::Initialize(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev)
+void Enemy::Initialize(State state, XMFLOAT3 pos, Object3d* eobj,Model* dyingModel, ID3D12Device* dev)
 {
 	position = pos;
 	eObj = eobj;
 	ste = state;
 	rotate = { 0,90,0 };
+	dyingSize = { 1,1,1 };
 	isDead = false;
+	isDying = false;
 	eObj->SetPosition(position);
 	eObj->SetRotation(rotate);
 	eObj->SetRadius(10);
+	this->dyingModel = dyingModel;
 	col = new Collision();
 	once = false;
 	addx = 0;
@@ -38,10 +41,17 @@ void Enemy::Initialize(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* 
 
 void Enemy::Update(Camera* camera, Player* player)
 {
-	if (hp <= 0)
+	if (hp <= 0&&!isDying)
 	{
 		hp = 0;
-		isDead = true;
+		isDying = true;
+		eObj->SetModel(dyingModel);
+		eObj->SetScale(dyingSize);
+	}
+
+	if (isDying)
+	{
+		Dying();
 		return;
 	}
 
@@ -173,6 +183,28 @@ bool Enemy::Shot()
 bool Enemy::IsDead()
 {
 	return isDead;
+}
+
+bool Enemy::IsDying()
+{
+	return isDying;
+}
+
+void Enemy::Dying()
+{
+	if (eObj->GetScale().x <= 100)
+	{
+		dyingSize.x += 5;
+		dyingSize.y += 5;
+		dyingSize.z += 5;
+
+		eObj->SetScale(dyingSize);
+	}
+	else
+	{
+		isDead = true;
+	}
+
 }
 
 float Enemy::GetHp()

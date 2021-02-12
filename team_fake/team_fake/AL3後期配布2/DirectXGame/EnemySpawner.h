@@ -8,7 +8,7 @@ class EnemyCache
 public:
 	~EnemyCache();
 
-	Enemy* Instance(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev);
+	Enemy* Instance(State state, XMFLOAT3 pos, Object3d* eobj,Model*dyingModel, ID3D12Device* dev);
 
 	void Cache(Enemy* enemy);
 
@@ -24,7 +24,7 @@ public:
 
 	~EnemySpawner();
 
-	void spawn(XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev);
+	void spawn(XMFLOAT3 pos, Object3d* eobj,Model*dyingModel, ID3D12Device* dev);
 
 	void Update(Camera* camera, Player* other);
 
