@@ -80,7 +80,7 @@ void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* 
 			SceneManager::instance().ChangeScene("Over");
 		
 	}
-	if (time>=60)
+	if (time>=30)
 	{
 		time2 += dTime;
 		bgm->UpdateFade(0, 0.5, time2);

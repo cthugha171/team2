@@ -38,6 +38,7 @@ void TitleScene::Initialize(DirectXCommon* directXInit)
 
 void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
+	
 	dTime= deltaTime->deltaTime();
 	if (bgm->endAudioCheck()|| Cbgm)
 	{
@@ -96,6 +97,8 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	//Player
 	{
 		player->Update(camera->GetmatView(), camera->GetmatProjection());
+		camera->setEyePos({ 0,10,-100 });
+		camera->setTargetPos({ 0,0,0 });
 		XMFLOAT3 rot = player->GetRotation();
 		rot.y += 1;
 		player->SetRotation(rot);
