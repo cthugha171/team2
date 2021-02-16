@@ -37,6 +37,7 @@ public: // サブクラス
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
+		XMFLOAT3 color;	// 色 (RGB)
 		XMMATRIX mat;	// ３Ｄ変換行列
 	};
 
@@ -154,12 +155,15 @@ public: // メンバ関数
 
 	float GetRadius() { return radius; }
 
+	//色設定
+	void SetColor(XMFLOAT3 color) { this->color = color; }
+
 	XMFLOAT3 GetScale() { return scale; }
 
 private: // メンバ変数
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	// 色
-	XMFLOAT4 color = { 1,1,1,1 };
+	XMFLOAT3 color = { 1,1,1 };
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角

@@ -19,7 +19,7 @@ class Enemy
 public:
 	Enemy();
 
-	void Initialize(State state, XMFLOAT3 pos, Object3d* eobj, ID3D12Device* dev);
+	void Initialize(State state, XMFLOAT3 pos, Object3d* eobj,Model*dyingModel, ID3D12Device* dev);
 
 	void Update(Camera* camera, Player* player);
 
@@ -39,6 +39,10 @@ public:
 
 	bool IsDead();
 
+	bool IsDying();
+
+	void Dying();
+
 	float GetHp();
 
 	Object3d* GetObjectShape();
@@ -51,6 +55,8 @@ private:
 	XMFLOAT3 position;
 	XMFLOAT3 plPos;
 	XMFLOAT3 rotate;
+	XMFLOAT3 dyingSize;
+	Model* dyingModel;
 	Object3d* eObj;
 	Collision* col;
 
@@ -64,5 +70,6 @@ private:
 	float addy;
 
 	bool isDead;
+	bool isDying;
 	bool once;
 };

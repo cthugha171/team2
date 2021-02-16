@@ -1,5 +1,18 @@
 #include "CreateObject.h"
 
+CreateObject::CreateObject()
+{
+	if (objList.size() == 0)
+	{
+		return;
+	}
+	for (auto objects : objList)
+	{
+		delete objects;
+	}
+
+}
+
 CreateObject::~CreateObject()
 {
 	for (auto objects : objList)

@@ -26,7 +26,7 @@ Building* BuildingCache::Instance(state state,XMFLOAT2 pos,XMFLOAT3 dist, Object
 
 	auto build = new Building();
 
-	build->Initialize(state,pos,obj,obj2);
+	build->Initialize(state,pos,dist,obj,obj2);
 
 	return build;
 }
@@ -34,6 +34,19 @@ Building* BuildingCache::Instance(state state,XMFLOAT2 pos,XMFLOAT3 dist, Object
 void BuildingCache::Cache(Building* building)
 {
 	cache.push(building);
+}
+
+BuildingSpawner::BuildingSpawner()
+{
+	if (BuildingList.size() == 0)
+	{
+		return;
+	}
+	for (auto build : BuildingList)
+	{
+		delete build;
+	}
+	
 }
 
 BuildingSpawner::~BuildingSpawner()

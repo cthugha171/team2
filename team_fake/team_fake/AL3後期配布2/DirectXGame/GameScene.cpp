@@ -20,10 +20,20 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	eModel = Model::CreateFromOBJ("enemy");
 	pbModel = Model::CreateFromOBJ("bullet");
 	building = Model::CreateFromOBJ("building");
+	dyingModel = Model::CreateFromOBJ("explosion");
 
 	//audio = new Audio();
 	//audio->initialize();
 
+	se = new Audio();
+	se->initialize();
+	se->LoadWave(L"Resources/shot.wav");
+	se2 = new Audio();
+	se2->initialize();
+	se2->LoadWave(L"Resources/se_dead.wav");
+	bgm = new Audio();
+	bgm->initialize();
+	bgm->LoadWave(L"Resources/bgm_game.wav");
 
 	objground->SetModel(ground);
 	objground2->SetModel(ground);
@@ -35,90 +45,122 @@ void GameScene::Initialize(DirectXCommon* directXInit)
 	player = new Player(100, {0,10},pObj,directXInit->GetDevice());
 	moveGround = new MoveGround();
 	ui = new UI();
+	eneSpawn = new EnemySpawner();
+	playerShot = new PlayerShot();
+	others = new CreateObject();
+	bSpawn = new BuildingSpawner();
 
 	player->Initialize();
 	moveGround->Initialize(objground, objground2, 5);
 	ui->Initialize();
 	ui->InitHP(player->GetHp());
+
+	dTime = 0;
+	time = 0;
+	time2 = 0;
+	time3 = 0;
+	sceneChange = false;
+	Cbgm = true;
 }
 
 void GameScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
-	if(player->IsDead())
+	dTime = deltaTime->deltaTime();
+	if (bgm->endAudioCheck() || Cbgm)
 	{
-		SceneManager::instance().ChangeScene("Over");
+		bgm->PlayWave(0.3f);
+		Cbgm = false;
 	}
-	if (eneSpawn.GetEndFlag() >= 100)
+
+	if(player->IsDead()&&time<60)
 	{
-		SceneManager::instance().ChangeScene("Over");
+		time2 += dTime;
+		bgm->UpdateFade(0, 0.5, time2);
+
+			bgm->Discard();
+			SceneManager::instance().ChangeScene("Over");
+		
+	}
+	if (time>=30)
+	{
+		time2 += dTime;
+		bgm->UpdateFade(0, 0.5, time2);
+
+			bgm->Discard();
+			SceneManager::instance().ChangeScene("Clear");
+		
 	}
 	XMMATRIX matView = camera->GetmatView();
 	XMMATRIX matPro = camera->GetmatProjection();
 
 
 	backside->Move(input,camera);
-
-	time += deltaTime->deltaTime();
-	time2 += deltaTime->deltaTime();
+	
+	time += dTime;
+	time3 += dTime;
 
 	epos = XMFLOAT3(epos.x, player->GetPosition().y, epos.z);
 
 
 	if (player->Shot(mouse))
 	{
-		playerShot.Shot(player->GetPosition(), others.create(pbModel));
-		time2 = 0;
+		se->PlayWave();
+		playerShot->Shot(player->GetPosition(), others->create(pbModel));
 	}
 
 
-	if (time / 2>=1)
+	if (time3 / 2>=1)
 	{
-		eneSpawn.spawn(epos,others.create(eModel),directXinit->GetDevice());
-		bSpawn.Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others.create(building), others.create(building));
-		time = 0;
+		eneSpawn->spawn(epos,others->create(eModel),dyingModel,directXinit->GetDevice());
+		bSpawn->Spawn({ player->GetPosition().x,epos.y }, {100,0,0}, others->create(building), others->create(building));
+		time3 = 0;
 	}
 
 
 	objback->Update(matView,matPro);
 	player->Update(camera, input);
 	moveGround->Update(camera);
-	eneSpawn.Update(camera, player);
-	playerShot.Update(player, mouse, camera, winApp);
-	bSpawn.Update(camera);
+	eneSpawn->Update(camera, player);
+	playerShot->Update(player, mouse, camera, winApp);
+	bSpawn->Update(camera);
 	//objground->Update(camera->GetmatView(),camera->GetmatProjection());
 
 	ui->HpGauge(player->GetHp());
 
 
-	for (auto it = playerShot.shotList.begin(); it != playerShot.shotList.end();)
+	for (auto it = playerShot->shotList.begin(); it != playerShot->shotList.end();)
 	{
-		for (auto itr = eneSpawn.enemyList.begin(); itr != eneSpawn.enemyList.end();)
+		for (auto itr = eneSpawn->enemyList.begin(); itr != eneSpawn->enemyList.end();)
 		{
 			if ((*it)->Collisions(*itr))
 			{
 				(*itr)->Damage(10);
 			}
+			/*if ((*itr)->IsDead())
+			{
+				se2->PlayWave();
+			}*/
 			
 			itr++;
 		}
 		it++;
 	}
 
-	for (auto itr = eneSpawn.enemyList.begin(); itr != eneSpawn.enemyList.end();)
+	for (auto itr = eneSpawn->enemyList.begin(); itr != eneSpawn->enemyList.end();)
 	{
-		if ((*itr)->Collisions(player))
+		if ((*itr)->Collisions(player)&&!(*itr)->IsDying())
 		{
-			player->Damage(20);
+			player->Damage(5);
 			(*itr)->Damage(10);
 		}
 		itr++;
 	}
 
-	for (auto itre = bSpawn.BuildingList.begin(); itre != bSpawn.BuildingList.end();)
+	for (auto itre = bSpawn->BuildingList.begin(); itre != bSpawn->BuildingList.end();)
 	{
 		if ((*itre)->Collitions(player, building))
 		{
-			player->Damage(10);
+			player->Damage(1);
 		}
 		itre++;
 	}
@@ -155,11 +197,11 @@ void GameScene::Draw(DirectXCommon* directXinit)
 
 	player->Draw();
 	
-	eneSpawn.Draw();
+	eneSpawn->Draw();
 
-	bSpawn.Draw();
+	bSpawn->Draw();
 
-	playerShot.Draw();
+	playerShot->Draw();
 
 
 	//3Dオブジェクト描画後取得
@@ -178,7 +220,7 @@ void GameScene::Delete()
 {
 	/*audio->Discard();
 	safe_dalete(audio);*/
-	others.~CreateObject();
+	safe_delete(others);
 	safe_delete(pObj);
 	safe_delete(eObj);
 	safe_delete(objground);
@@ -191,10 +233,11 @@ void GameScene::Delete()
 	safe_delete(back);
 	safe_delete(ground);
 	safe_delete(building);
+	safe_delete(dyingModel);
 	safe_delete(player);
 	safe_delete(backside);
 	safe_delete(ui);
-	eneSpawn.~EnemySpawner();
-	bSpawn.~BuildingSpawner();
-	playerShot.~PlayerShot();
+	safe_delete(eneSpawn);
+	safe_delete(playerShot);
+	safe_delete(bSpawn);
 }

@@ -6,6 +6,7 @@
 class PlayerShot
 {
 public:
+	PlayerShot();
 	//デストラクタ
 	~PlayerShot();
 

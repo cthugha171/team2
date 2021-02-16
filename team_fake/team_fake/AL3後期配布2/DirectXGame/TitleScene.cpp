@@ -23,24 +23,44 @@ void TitleScene::Initialize(DirectXCommon* directXInit)
 	player->SetRotation(rot);
 	player->SetScale({ 7,7,7 });
 	player->SetPosition({ -5,-5,3 });
-	bgm = new Audio();
+	se = new Audio();
+	se->initialize();
+	se->LoadWave(L"Resources/kettei-02.wav");
+ 	bgm = new Audio();
 	bgm->initialize();
-
+	bgm->LoadWave(L"Resources/Cubes.wav");
+	dTime = 0;
+	time = 0;
+	time2 = 0;
+	sceneChange = false;
+	Cbgm = true;
 }
 
 void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp* winApp)
 {
+	
+	dTime= deltaTime->deltaTime();
+	if (bgm->endAudioCheck()|| Cbgm)
+	{
+		bgm->PlayWave(0.5f);
+		Cbgm = false;
+	}
+	
 	if (input->isKeyDown(DIK_SPACE))
 	{
-		bgm->PlayWave("Resources/kettei-02.wav");
+		se->PlayWave(0.5f);
 		sceneChange = true;
 	}
 
 	if (sceneChange)
 	{
-		if (bgm->endAudioCheck())
+		time2 += dTime;
+		bgm->UpdateFade(0, 0.5, time2);
+
+		if (se->endAudioCheck())
 		{
-			SceneManager::instance().ChangeScene("Over");
+			bgm->Discard();
+			SceneManager::instance().ChangeScene("Game");
 		}
 		
 	}
@@ -48,7 +68,7 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	{
 		if (colorChange)
 		{
-			time += deltaTime->deltaTime();
+			time += dTime;
 			colorGB = Vector2::lerp(1, 0, time / 3);
 			TitlePushKey->SetColor({ 1,colorGB,colorGB ,1 });
 			if (colorGB<0)
@@ -59,7 +79,7 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 
 		else if (colorChange==false)
 		{
-			time += deltaTime->deltaTime();
+			time += dTime;
 			colorGB = Vector2::lerp(0, 1, time / 3);
 			TitlePushKey->SetColor({ 1,colorGB,colorGB ,1 });
 			if (colorGB >= 1)
@@ -77,6 +97,8 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 	//Player
 	{
 		player->Update(camera->GetmatView(), camera->GetmatProjection());
+		camera->setEyePos({ 0,10,-100 });
+		camera->setTargetPos({ 0,0,0 });
 		XMFLOAT3 rot = player->GetRotation();
 		rot.y += 1;
 		player->SetRotation(rot);

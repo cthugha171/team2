@@ -36,6 +36,7 @@ private:
 	Model* eModel;
 	Model* pbModel;
 	Model* building;
+	Model* dyingModel;
 	Object3d* objground;
 	Object3d* objground2;
 	Object3d* objback;
@@ -46,17 +47,26 @@ private:
 	MoveGround* moveGround;
 	Player* player;
 	Enemy* enemy;
-	CreateObject others;
-	PlayerShot playerShot;
-	EnemySpawner eneSpawn;
-	BuildingSpawner bSpawn;
+	CreateObject* others;
+	PlayerShot* playerShot;
+	EnemySpawner* eneSpawn;
+	BuildingSpawner* bSpawn;
 	UI* ui;
 
 	DeltaTime* deltaTime;
 	
 	XMFLOAT3 epos;
 
+	bool Cbgm;
+	Audio* se;
+	Audio* se2;
+	Audio* bgm;
+	bool sceneChange = false;
+
 	bool oto = false;
 	float time = 0;
+
+	float dTime = 0;
 	float time2 = 0;
+	float time3 = 0;
 };

@@ -54,10 +54,10 @@ public:
 		WAVEFORMAT fmt;//波形フォーマット
 	};
 	void initialize();
-	void PlayWave(const char* filename,float volume=1.0);
+	void PlayWave(float volume=1.0);
 	void PlayLoopWave(const char* filename, float volume=1.0);
-	void FileOpen();
-	void LoadWavFile();
+	void LoadWave(const wchar_t* filename);
+
 	void Discard();
 
 	void setVolume(float volume);
@@ -65,16 +65,20 @@ public:
 	float FadeIN(float TargetVolume, float DeltaTime);
 	void UpdateFade(float TargetVolume, float TargetTime,float DeltaTime);
 	bool endAudioCheck();
+	bool CheckAudio();
 
 	IXAudio2SourceVoice* pSourcVoice = nullptr;
 private:
 	IXAudio2* pXAudio2 = nullptr;
 	UINT32 flags = 0;
 
+	void FileOpen(const wchar_t* filename);
+	void LoadWavFile();
+
 	//マスターボイス
 	IXAudio2MasteringVoice* pMasteringVoice = nullptr;
 	//ソースボイス
-	
+	static const int AudioCount = 512;
 	std::ifstream file;
 	const char* filename;
 	FormatChunk format;
@@ -82,5 +86,7 @@ private:
 	char* pBuffer;
 	XAudio2VoiceCallback voiceCallback;
 	float TargetVolume;
+
+	
 };
 

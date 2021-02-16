@@ -38,6 +38,7 @@ void Player::Update(Camera* camera,Input*input)
 	Move(camera);
 	Roll();
 	pObj->Update(camera->GetmatView(), camera->GetmatProjection());
+	pObj->SetColor({ 1,1,1 });
 
 }
 
@@ -51,8 +52,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y += 5.0f;
-		feyePos.y += 5;
-		ftargetPos.y += 5;
 	}
 	if (input->isKeyState(DIK_S))
 	{
@@ -62,8 +61,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.y -= 5.0f;
-		feyePos.y -= 5;
-		ftargetPos.y -= 5;
 	}
 	if (input->isKeyState(DIK_A))
 	{
@@ -73,8 +70,6 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.x -= 5.0;
-		feyePos.x -= 5;
-		ftargetPos.x -= 5;
 	}
 	if (input->isKeyState(DIK_D))
 	{
@@ -84,11 +79,42 @@ void Player::Move(Camera* camera)
 			goto confirm;
 		}
 		position.x += 5.0f;
-		feyePos.x += 5;
-		ftargetPos.x += 5;
 	}
 
-	confirm:
+confirm:
+
+	if (feyePos.x >= position.x )
+	{
+		feyePos.x -= 4;
+	}
+	if (feyePos.x <= position.x)
+	{
+		feyePos.x += 4;
+	}
+	if (feyePos.y >= position.y )
+	{
+		feyePos.y -= 4;
+	}
+	if (feyePos.y <= position.y)
+	{
+		feyePos.y += 4;
+	}
+	if (ftargetPos.x >= position.x )
+	{
+		ftargetPos.x -= 4;
+	}
+	if (ftargetPos.x <= position.x)
+	{
+		ftargetPos.x += 4;
+	}
+	if (ftargetPos.y >= position.y )
+	{
+		ftargetPos.y -= 4;
+	}
+	if (ftargetPos.y <= position.y)
+	{
+		ftargetPos.y += 4;
+	}
 
 	if (position.y <= 0)
 	{
@@ -170,6 +196,7 @@ void Player::Roll()
 void Player::Damage(int dmg)
 {
 	hp -= dmg;
+	pObj->SetColor({ 1,0,0 });
 }
 
 bool Player::Shot(MouseInput* mouse)

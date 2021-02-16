@@ -27,4 +27,12 @@ public:
 	static bool CheckSphere2Triangle(Object3d* shpere, Model* triangle,DirectX::XMVECTOR* inter = nullptr);
 
 	bool SphereToPlane( Object3d* shpere, Model* plane, XMFLOAT3* inter);
+
+	/// <summary>
+	/// 球と矩形の当たり判定
+	/// </summary>
+	/// <param name="sph">オブジェクトに設定されている球</param>
+	/// <param name="rect">矩形</param>
+	/// <returns>当たっているかどうか</returns>
+	bool SphereToRectangles(Object3d* sph, Rectangles* rect);
 };

@@ -4,7 +4,6 @@
 #include<stdio.h>
 #include <cassert>
 #include "Vector2.h"
-//#include "SDKwavafile.h"
 
 
 void Audio::initialize()
@@ -22,14 +21,9 @@ void Audio::initialize()
 	}
 }
 
-void Audio::PlayWave(const char* filename, float volume)
+void Audio::PlayWave(float volume)
 {
 	HRESULT hr;
-	this->filename = filename;
-
-	FileOpen();
-
-	LoadWavFile();
 
 	//サウンドの再生
 	WAVEFORMATEX wfex{};
@@ -77,64 +71,66 @@ void Audio::PlayWave(const char* filename, float volume)
 	}
 }
 
-void Audio::PlayLoopWave(const char* filename, float volume)
-{
-	HRESULT hr;
-	this->filename = filename;
+//void Audio::PlayLoopWave(const char* filename, float volume)
+//{
+//	HRESULT hr;
+//
+//	//サウンドの再生
+//	WAVEFORMATEX wfex{};
+//	//波形フォーマット設定
+//	memcpy(&wfex, &format.fmt, sizeof(format.fmt));
+//	wfex.wBitsPerSample = format.fmt.nBlockAlign * 8 / format.fmt.nChannels;
+//
+//	//波形フォーマットを元にSocrceVoiceの生成
+//	IXAudio2SourceVoice* pSourcVoice = nullptr;
+//	hr = pXAudio2->CreateSourceVoice(&pSourcVoice, &wfex);
+//	if FAILED(hr)
+//	{
+//		delete[] pBuffer;
+//		return;
+//	}
+//
+//	//再生する波形データの設定
+//	XAUDIO2_BUFFER buf{};
+//	buf.pAudioData = (BYTE*)pBuffer;
+//	buf.pContext = pBuffer;
+//	buf.Flags = XAUDIO2_END_OF_STREAM;
+//	if (data.size >= 0)
+//	{
+//		buf.AudioBytes = data.size;
+//	}
+//	else if (data.size < 0)
+//	{
+//		buf.AudioBytes = -data.size;
+//	}
+//	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+//
+//	//波形データの再生
+//	hr = pSourcVoice->SubmitSourceBuffer(&buf);
+//	if FAILED(hr) {
+//		delete[] pBuffer;
+//		assert(0);
+//		return;
+//	}
+//
+//	float TargetVolume = volume * volume;
+//	pSourcVoice->SetVolume(TargetVolume);
+//	hr = pSourcVoice->Start();
+//	if FAILED(hr) {
+//		delete[] pBuffer;
+//		assert(0);
+//		return;
+//	}
+//}
 
-	FileOpen();
+void Audio::LoadWave(const wchar_t* filename)
+{
+	FileOpen(filename);
 
 	LoadWavFile();
-
-	//サウンドの再生
-	WAVEFORMATEX wfex{};
-	//波形フォーマット設定
-	memcpy(&wfex, &format.fmt, sizeof(format.fmt));
-	wfex.wBitsPerSample = format.fmt.nBlockAlign * 8 / format.fmt.nChannels;
-
-	//波形フォーマットを元にSocrceVoiceの生成
-	IXAudio2SourceVoice* pSourcVoice = nullptr;
-	hr = pXAudio2->CreateSourceVoice(&pSourcVoice, &wfex);
-	if FAILED(hr)
-	{
-		delete[] pBuffer;
-		return;
-	}
-
-	//再生する波形データの設定
-	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = (BYTE*)pBuffer;
-	buf.pContext = pBuffer;
-	buf.Flags = XAUDIO2_END_OF_STREAM;
-	if (data.size >= 0)
-	{
-		buf.AudioBytes = data.size;
-	}
-	else if (data.size < 0)
-	{
-		buf.AudioBytes = -data.size;
-	}
-	buf.LoopCount = XAUDIO2_LOOP_INFINITE;
-
-	//波形データの再生
-	hr = pSourcVoice->SubmitSourceBuffer(&buf);
-	if FAILED(hr) {
-		delete[] pBuffer;
-		assert(0);
-		return;
-	}
-
-	float TargetVolume = volume * volume;
-	pSourcVoice->SetVolume(TargetVolume);
-	hr = pSourcVoice->Start();
-	if FAILED(hr) {
-		delete[] pBuffer;
-		assert(0);
-		return;
-	}
 }
 
-void Audio::FileOpen()
+void Audio::FileOpen(const wchar_t* filename)
 {
 	file.open(filename, std::ios_base::binary);
 	if (file.fail())
@@ -185,13 +181,18 @@ void Audio::Discard()
 	pMasteringVoice->DestroyVoice();
 
 	pXAudio2->Release();
-
-	CoUninitialize();
 }
 
 void Audio::setVolume(float volume)
 {
-	float TargetVolume = volume * volume;
+	if (volume>0)
+	{
+		TargetVolume = volume * volume;
+	}
+	else
+	{
+		TargetVolume = 0;
+	}
 	pSourcVoice->SetVolume(TargetVolume);
 }
 
@@ -210,7 +211,7 @@ void Audio::UpdateFade(float TargetVolume, float TargetTime, float DeltaTime)
 
 bool Audio::endAudioCheck()
 {
-	//再生が終わったか確認していろいろ削除
+	//再生が終わったか確認
 	XAUDIO2_VOICE_STATE state;
 	if (pSourcVoice == NULL)
 	{
@@ -225,4 +226,14 @@ bool Audio::endAudioCheck()
 		}
 	}
 	return false;
+}
+
+bool Audio::CheckAudio()
+{
+	XAUDIO2_VOICE_STATE state;
+	if (pSourcVoice == NULL)
+	{
+		return false;
+	}
+	return true;
 }

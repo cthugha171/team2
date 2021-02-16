@@ -164,3 +164,15 @@ bool Collision::SphereToPlane(Object3d* shpere, Model* plane,XMFLOAT3 *inter )
 	//}
 	return true;
 }
+
+bool Collision::SphereToRectangles(Object3d* sph, Rectangles* rect)
+{
+	if (sph->GetPosition().x + sph->GetRadius() > (rect->center.x - rect->size.x / 2) && sph->GetPosition().x - sph->GetRadius() < (rect->center.x + rect->size.x / 2) &&
+		sph->GetPosition().y + sph->GetRadius() > (rect->center.y - rect->size.y / 2) && sph->GetPosition().y - sph->GetRadius() < (rect->center.y + rect->size.y / 2) &&
+		sph->GetPosition().z + sph->GetRadius() > (rect->center.z - rect->size.z / 2) && sph->GetPosition().z - sph->GetRadius() < (rect->center.z + rect->size.z / 2))
+	{
+		return true;
+	}
+
+	return false;
+}
