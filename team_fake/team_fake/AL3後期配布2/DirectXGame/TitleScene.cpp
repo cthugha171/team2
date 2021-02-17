@@ -46,7 +46,7 @@ void TitleScene::Update(Input* input, MouseInput* mouse, Camera* camera, WinApp*
 		Cbgm = false;
 	}
 	
-	if (input->isKeyDown(DIK_SPACE))
+	if (input->isKeyDown(DIK_SPACE)&&sceneChange==false)
 	{
 		se->PlayWave(0.5f);
 		sceneChange = true;
